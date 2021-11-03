@@ -1,3 +1,3 @@
-A template for Unity HDRP.
+Melting Cube
 
-Unity version 2020.3.11
+Unity version 2020.3.20
