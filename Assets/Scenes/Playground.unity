@@ -7879,7 +7879,7 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568003516}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 0
@@ -7981,9 +7981,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleParent: {fileID: 1851154578}
   lineRenderer: {fileID: 568003518}
-  iterations: 50
+  iterations: 10
   dummyPlayer: {fileID: 5259415608200587492, guid: 788c0399bddb70643888dc67f734e92f, type: 3}
-  timeStep: 0.04
+  timeStep: 0.08
 --- !u!1 &569503054
 GameObject:
   m_ObjectHideFlags: 0

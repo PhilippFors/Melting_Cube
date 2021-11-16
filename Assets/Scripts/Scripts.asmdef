@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "com.philfors.usefulcode.runtime",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

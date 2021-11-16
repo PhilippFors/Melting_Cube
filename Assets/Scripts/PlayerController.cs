@@ -80,7 +80,10 @@ public class PlayerController : MonoBehaviour
             direction = (transform.position - point).normalized;
             distance = Vector3.Distance(point, transform.position);
             distance = Mathf.Clamp(distance, 0, maxDistance);
-            TrajectoryPredictor.Instance.SimulateTrajectory(gameObject, transform.position, direction * (distance * force));
+            
+            if (!TrajectoryPredictor.Instance.isRunning) {
+                TrajectoryPredictor.Instance.SimulateTrajectory(gameObject, transform.position, direction * (distance * force)).Forget();
+            }
         }
     }
 
