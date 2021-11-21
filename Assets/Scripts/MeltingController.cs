@@ -5,21 +5,35 @@ namespace Entities.Player.PlayerInput
 {
     public class MeltingController : MonoBehaviour
     {
+        public float CurrentSize => currentSize;
+        public float MeltOverDistanceAmount => meltOverDistanceAmount;
+
+        public bool isDummy;
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private bool stopMeltOnCollision;
         [SerializeField] private bool meltOnce;
         [SerializeField] private float meltOverDistanceAmount;
         [SerializeField] private float meltOnceAmount;
         private Vector3 oldPosition;
+        [SerializeField] private float currentSize = 1;
+        private float maxSize = 1;
+        private Vector3 startScale;
 
         private void Start()
         {
-            oldPosition = transform.position;
+            Init();
+            
             if (playerController) {
                 playerController.onRelase += MeltOnce;
             }
-
         }
 
+        public void Init()
+        {
+            startScale = transform.localScale;
+            oldPosition = transform.position;
+        }
+        
         private void OnDisable()
         {
             if (playerController) {
@@ -29,10 +43,18 @@ namespace Entities.Player.PlayerInput
 
         private void Update()
         {
-            MeltOverDistance();
-            if (transform.localScale.x < 0.1f) {
-                Debug.Log("GameOver lol");
-                ResetMelt();
+            if (!isDummy) {
+                if (stopMeltOnCollision && !playerController.HasCollided) {
+                    MeltOverDistance();
+                }
+                else if (!stopMeltOnCollision) {
+                    MeltOverDistance();
+                }
+
+                if (transform.localScale.x < 0.1f) {
+                    Debug.Log("GameOver lol");
+                    ResetMelt();
+                }
             }
         }
 
@@ -50,23 +72,32 @@ namespace Entities.Player.PlayerInput
         private void MeltOverDistance()
         {
             var newPos = transform.position;
-            
-            if (!meltOnce) {
 
+            if (!meltOnce) {
                 var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
-                var newScale = transform.localScale - new Vector3(diff, diff, diff);
-                if (!(transform.localScale.x < 0.1f)) {
-                    transform.localScale = newScale;
+                if (diff > 0.001) {
+                    currentSize -= diff;
+
+                    var newScale = (maxSize * currentSize) * startScale;
+                    if (!(transform.localScale.x < 0.1f)) {
+                        transform.localScale = newScale;
+                    }
                 }
             }
 
             oldPosition = newPos;
         }
 
+        public void ForceMelt()
+        {
+            MeltOverDistance();
+        }
+
         [Button]
         private void ResetMelt()
         {
             transform.localScale = Vector3.one;
+            currentSize = 1;
         }
     }
 }

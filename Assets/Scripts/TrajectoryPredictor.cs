@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Entities.Player.PlayerInput;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UsefulCode.Utilities;
@@ -48,31 +49,55 @@ public class TrajectoryPredictor : SingletonBehaviour<TrajectoryPredictor>
             ghostObj.transform.localScale = player.transform.localScale;
             ghostObj.GetComponent<Renderer>().enabled = false;
             SceneManager.MoveGameObjectToScene(ghostObj, simScene);
+
+            var meltingController = player.GetComponent<MeltingController>();
+            var dummyMeltingController = ghostObj.GetComponent<MeltingController>();
+            var dummyCollisionDetector = ghostObj.GetComponent<DummyCollisionDetector>();
+            var ignoreCollision = true;
+            dummyMeltingController.isDummy = true;
+            dummyMeltingController.Init();
+            
             ghostObj.GetComponent<Rigidbody>().AddForce(vel, ForceMode.Impulse);
             oldPos = ghostObj.transform.position;
-            lineRenderer.positionCount = iterations;
             
-            positions.Clear();
             currentBatch = 0;
+            int positionCount = 0;
             for (int i = 0; i < iterations; i++) {
+                positionCount++;
                 physScene.Simulate(timeStep);
-                var diff = Vector3.Distance(oldPos, ghostObj.transform.position) * 0.1f / 10;
-                var newScale = ghostObj.transform.localScale - new Vector3(diff, diff, diff);
-                ghostObj.transform.localScale = newScale;
+                var hasCollided = dummyCollisionDetector.hasCollided;
+                
+                dummyMeltingController.ForceMelt();
+                
                 positions.Add(ghostObj.transform.position);
+                
+                if (hasCollided && !ignoreCollision) {
+                    positionCount--;
+                    positions[positionCount] = ghostObj.transform.position;
+                    break;
+                }
+
                 oldPos = ghostObj.transform.position;
                 currentBatch++;
                 if (currentBatch > batchSize) {
                     await UniTask.Yield();
                     currentBatch = 0;
                 }
+
+                if (i == batchSize) {
+                    dummyCollisionDetector.hasCollided = false;
+                    ignoreCollision = false;
+                }
             }
 
-            for (int i = 0; i < positions.Count; i++) {
+            lineRenderer.positionCount = positionCount;
+            
+            for (int i = 0; i < positionCount; i++) {
                 lineRenderer.SetPosition(i, positions[i]);
             }
 
-            Debug.Log($"EndScale: {ghostObj.transform.localScale}");
+            Debug.Log($"EndScale: {dummyMeltingController.CurrentSize}");
+            positions.Clear();
             Destroy(ghostObj);
             isRunning = false;
         }

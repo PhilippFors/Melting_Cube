@@ -49,6 +49,8 @@ MonoBehaviour:
   iterations: 10
   dummyPlayer: {fileID: 0}
   timeStep: 0.033333
+  batchSize: 3
+  isRunning: 0
 --- !u!120 &4372607305555404179
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -158,6 +160,8 @@ GameObject:
   - component: {fileID: 6353342624621940966}
   - component: {fileID: 3684633968650687910}
   - component: {fileID: 628198758066608609}
+  - component: {fileID: 2915272988356381187}
+  - component: {fileID: 8522211021046707600}
   m_Layer: 0
   m_Name: DummyPlayer
   m_TagString: Untagged
@@ -258,3 +262,35 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 98
   m_CollisionDetection: 0
+--- !u!114 &2915272988356381187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5259415608200587492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b237e51d3af53aa428c536f87ab4ef5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasCollided: 0
+--- !u!114 &8522211021046707600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5259415608200587492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55457d71af064b12b3d3cbecb95c8a07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDummy: 1
+  playerController: {fileID: 0}
+  stopMeltOnCollision: 0
+  meltOnce: 0
+  meltOverDistanceAmount: 0.1
+  meltOnceAmount: 0.1
+  currentSize: 1

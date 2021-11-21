@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool HasCollided => hasCollided;
     public event System.Action onRelase;
-
+    
     [SerializeField] private bool useMouseDistance;
     [SerializeField] private Vector2 sensitivity = new Vector2(2, 4);
     [SerializeField] private Vector2 clamPoint = new Vector2(-1, 1);
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float force = 8;
     [SerializeField] private float maxDistance = 4;
     [SerializeField] private float distance;
+    [SerializeField] private bool hasCollided;
     
     private bool canThrow;
     private bool hitPlayer;
@@ -22,12 +24,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentDelta => PlayerInputController.Instance.MouseDelta.ReadValue();
     private bool lmbPressed => PlayerInputController.Instance.LeftMouseButton.IsPressed;
     private bool rmbPressed => PlayerInputController.Instance.RightMouseButton.IsPressed;
-
     private Plane plane;
     private Vector3 direction;
     private bool isGrounded;
-
-
+    
     private void Start()
     {
         cam = Camera.main;
@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
             distance = Vector3.Distance(point, transform.position);
             distance = Mathf.Clamp(distance, 0, maxDistance);
             
+            //TODO: Find a better way to do trajectories. Use phys sym for only checking collisions
             if (!TrajectoryPredictor.Instance.isRunning) {
                 TrajectoryPredictor.Instance.SimulateTrajectory(gameObject, transform.position, direction * (distance * force)).Forget();
             }
@@ -137,5 +138,11 @@ public class PlayerController : MonoBehaviour
         }
 
         onRelase?.Invoke();
+        hasCollided = false;
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        hasCollided = true;
     }
 }
