@@ -88,6 +88,13 @@ namespace Entities.Player.PlayerInput
             oldPosition = newPos;
         }
 
+        public void AddSize(float value)
+        {
+            currentSize += value;
+            var newScale = (maxSize * currentSize) * startScale;
+            transform.localScale = newScale;
+        }
+        
         public void ForceMelt()
         {
             MeltOverDistance();

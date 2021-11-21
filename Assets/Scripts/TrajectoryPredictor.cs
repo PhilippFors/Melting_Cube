@@ -35,7 +35,7 @@ public class TrajectoryPredictor : SingletonBehaviour<TrajectoryPredictor>
         if (obstacleParent) {
             foreach (Transform obj in obstacleParent) {
                 var ghostObj = Instantiate(obj.gameObject, obj.transform.position, obj.transform.rotation);
-                ghostObj.GetComponent<Renderer>().enabled = false;
+                ghostObj.GetComponentInChildren<Renderer>().enabled = false;
                 SceneManager.MoveGameObjectToScene(ghostObj, simScene);
             }
         }
