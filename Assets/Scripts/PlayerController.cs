@@ -53,8 +53,16 @@ public class PlayerController : MonoBehaviour
 
     private void DistanceBased()
     {
+        
         var ray = cam.ScreenPointToRay(mousePos);
 
+        if (rmbPressed) {
+            canThrow = false;
+            hitPlayer = false;
+            TrajectoryPredictor.Instance.Disable();
+            return;
+        }
+        
         if (lmbPressed) {
             
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity)) {
@@ -81,6 +89,7 @@ public class PlayerController : MonoBehaviour
             distance = Vector3.Distance(point, transform.position);
             distance = Mathf.Clamp(distance, 0, maxDistance);
             
+            TrajectoryPredictor.Instance.Enable();
             //TODO: Find a better way to do trajectories. Use phys sym for only checking collisions
             if (!TrajectoryPredictor.Instance.isRunning) {
                 TrajectoryPredictor.Instance.SimulateTrajectory(gameObject, transform.position, direction * (distance * force)).Forget();
@@ -139,6 +148,7 @@ public class PlayerController : MonoBehaviour
 
         onRelase?.Invoke();
         hasCollided = false;
+        TrajectoryPredictor.Instance.Disable();
     }
 
     private void OnCollisionEnter(Collision other)

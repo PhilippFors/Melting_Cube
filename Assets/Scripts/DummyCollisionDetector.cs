@@ -1,13 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DummyCollisionDetector : MonoBehaviour
 {
-    public bool hasCollided;
+    public List<Vector3> collisionPoints = new List<Vector3>();
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.transform.gameObject.layer == 6) {
-            hasCollided = true;
-        }
+        collisionPoints.Add(transform.position);
     }
 }

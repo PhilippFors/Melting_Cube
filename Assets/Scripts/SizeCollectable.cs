@@ -9,6 +9,7 @@ public class SizeCollectable : MonoBehaviour
         var meltythingy = other.GetComponent<MeltingController>();
         if (meltythingy && meltythingy.isDummy) {
             meltythingy.AddSize(addSize);
+            gameObject.SetActive(false);
         } else if (meltythingy && !meltythingy.isDummy) {
             meltythingy.AddSize(addSize);
             Destroy(gameObject);

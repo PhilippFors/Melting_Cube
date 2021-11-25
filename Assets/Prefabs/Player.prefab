@@ -44,13 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33b08d697fe09945ac9b030d12a2793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  previewPlayer: {fileID: 0}
+  predictiveSize: 1
   obstacleParent: {fileID: 0}
   lineRenderer: {fileID: 2289752303558949697}
-  iterations: 15
+  iterations: 10
   dummyPlayer: {fileID: 5259415608200587492, guid: 788c0399bddb70643888dc67f734e92f, type: 3}
-  timeStep: 0.04
-  batchSize: 3
+  timeStep: 0.05
+  batchSize: 5
   isRunning: 0
+  collisions: []
+  oldPositions: []
 --- !u!120 &2289752303558949697
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -266,6 +270,8 @@ MonoBehaviour:
   meltOverDistanceAmount: 0.1
   meltOnceAmount: 0.1
   currentSize: 1
+  maxSize: 1
+  startScale: {x: 0, y: 0, z: 0}
 --- !u!114 &2289752304218796815
 MonoBehaviour:
   m_ObjectHideFlags: 0

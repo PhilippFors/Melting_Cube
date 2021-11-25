@@ -16,8 +16,8 @@ namespace Entities.Player.PlayerInput
         [SerializeField] private float meltOnceAmount;
         private Vector3 oldPosition;
         [SerializeField] private float currentSize = 1;
-        private float maxSize = 1;
-        private Vector3 startScale;
+        public float maxSize = 1;
+        public Vector3 startScale;
 
         private void Start()
         {
