@@ -51,9 +51,16 @@ namespace Entities.Player.PlayerInput
                     MeltOverDistance();
                 }
 
+                //--- Thomas added this bugfix  
+                else if (playerController.HasCollided)
+                {
+                    oldPosition = transform.position;
+                }
+                //---
                 if (transform.localScale.x < 0.1f) {
                     Debug.Log("GameOver lol");
                     ResetMelt();
+                    
                 }
             }
         }
@@ -72,6 +79,7 @@ namespace Entities.Player.PlayerInput
         private void MeltOverDistance()
         {
             var newPos = transform.position;
+           
 
             if (!meltOnce) {
                 var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;

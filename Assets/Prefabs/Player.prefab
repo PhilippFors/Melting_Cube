@@ -216,7 +216,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  - {fileID: 2100000, guid: ad464cc27a0d5074aa45e743653bf824, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -267,7 +267,7 @@ MonoBehaviour:
   playerController: {fileID: 2289752304218796815}
   stopMeltOnCollision: 1
   meltOnce: 0
-  meltOverDistanceAmount: 0.1
+  meltOverDistanceAmount: 0.3
   meltOnceAmount: 0.1
   currentSize: 1
   maxSize: 1
