@@ -1,4 +1,3 @@
-using System;
 using Entities.Player.PlayerInput;
 using UnityEngine;
 
@@ -59,7 +58,7 @@ public class PlayerController : MonoBehaviour
         if (rmbPressed) {
             canThrow = false;
             hitPlayer = false;
-            TrajectoryPredictor.Instance.Disable();
+            NewTrajectoryPredictor.Instance.Disable();
             return;
         }
         
@@ -89,11 +88,12 @@ public class PlayerController : MonoBehaviour
             distance = Vector3.Distance(point, transform.position);
             distance = Mathf.Clamp(distance, 0, maxDistance);
             
-            TrajectoryPredictor.Instance.Enable();
+            NewTrajectoryPredictor.Instance.Enable();
             //TODO: Find a better way to do trajectories. Use phys sym for only checking collisions
-            if (!TrajectoryPredictor.Instance.isRunning) {
-                TrajectoryPredictor.Instance.SimulateTrajectory(gameObject, transform.position, direction * (distance * force)).Forget();
-            }
+            // if (!TrajectoryPredictor.Instance.isRunning) {
+            //     TrajectoryPredictor.Instance.SimulateTrajectory(gameObject, transform.position, direction * (distance * force)).Forget();
+            // }
+            NewTrajectoryPredictor.Instance.Simulate(this.gameObject, rb.velocity, direction * (distance * force));
         }
     }
 
@@ -153,6 +153,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        hasCollided = true;
+        if (other.gameObject.GetComponent<MeltStopper>()) {
+            hasCollided = true;
+        }
     }
 }
