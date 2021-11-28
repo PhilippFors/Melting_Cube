@@ -11,7 +11,12 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        activeScene = scenes[0];
+        var a = SceneManager.GetActiveScene();
+        foreach (var s in scenes) {
+            if (a.buildIndex == s.SceneIndex) {
+                activeScene = s;
+            }
+        }
     }
 
     public void ReloadScene()
