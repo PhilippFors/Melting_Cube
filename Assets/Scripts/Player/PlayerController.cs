@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
                 DeltaBased();
             }
         }
+        
+        
     }
 
     private bool GroundCheck()
@@ -50,9 +52,8 @@ public class PlayerController : MonoBehaviour
         return Physics.CheckSphere(transform.position, transform.localScale.x + 0.05f, LayerMask.GetMask("Ground"));
     }
 
-    private void DistanceBased()
+    private void DistanceBased() // based and asianwifepilled
     {
-        
         var ray = cam.ScreenPointToRay(mousePos);
 
         if (rmbPressed) {
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void DeltaBased()
+    private void DeltaBased() // based? based on what
     {
         var ray = cam.ScreenPointToRay(mousePos);
 

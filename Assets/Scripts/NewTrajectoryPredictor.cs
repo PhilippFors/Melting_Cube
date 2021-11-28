@@ -32,6 +32,5 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
         lineRenderer.positionCount = 0;
     }
 
-    private Vector3 GetPoint(Vector3 start, Vector3 force, float t) =>
-        (start + force * t) + 0.5f * Physics.gravity * (t * t);
+    private Vector3 GetPoint(Vector3 start, Vector3 force, float t) => (start + force * t) + Physics.gravity * (0.5f * Mathf.Pow(t, 2));
 }

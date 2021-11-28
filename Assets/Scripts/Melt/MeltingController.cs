@@ -1,12 +1,11 @@
-﻿using Sirenix.OdinInspector;
-using UnityEngine;
+﻿using UnityEngine;
+using UsefulCode.SOArchitecture;
 
 namespace Entities.Player.PlayerInput
 {
     public class MeltingController : MonoBehaviour
     {
-        public float CurrentSize => currentSize;
-        public float MeltOverDistanceAmount => meltOverDistanceAmount;
+        public float CurrentSize => currentSize.Value;
 
         public bool isDummy;
         [SerializeField] private PlayerController playerController;
@@ -14,15 +13,16 @@ namespace Entities.Player.PlayerInput
         [SerializeField] private bool meltOnce;
         [SerializeField] private float meltOverDistanceAmount;
         [SerializeField] private float meltOnceAmount;
+        [SerializeField] private FloatVariable currentSize;
+
         private Vector3 oldPosition;
-        [SerializeField] private float currentSize = 1;
         public float maxSize = 1;
         public Vector3 startScale;
 
         private void Start()
         {
             Init();
-            
+
             if (playerController) {
                 playerController.onRelase += MeltOnce;
             }
@@ -30,10 +30,11 @@ namespace Entities.Player.PlayerInput
 
         public void Init()
         {
+            currentSize.Value = maxSize;
             startScale = transform.localScale;
             oldPosition = transform.position;
         }
-        
+
         private void OnDisable()
         {
             if (playerController) {
@@ -50,17 +51,13 @@ namespace Entities.Player.PlayerInput
                 else if (!stopMeltOnCollision) {
                     MeltOverDistance();
                 }
-
-                //--- Thomas added this bugfix  
-                else if (playerController.HasCollided)
-                {
+                else if (playerController.HasCollided) {
                     oldPosition = transform.position;
                 }
-                //---
-                if (transform.localScale.x < 0.1f) {
+
+                if (currentSize.Value <= 0f) {
                     Debug.Log("GameOver lol");
-                    ResetMelt();
-                    
+                    OnDeath();
                 }
             }
         }
@@ -79,14 +76,14 @@ namespace Entities.Player.PlayerInput
         private void MeltOverDistance()
         {
             var newPos = transform.position;
-           
+
 
             if (!meltOnce) {
                 var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
                 if (diff > 0.001) {
-                    currentSize -= diff;
+                    currentSize.Value -= diff;
 
-                    var newScale = (maxSize * currentSize) * startScale;
+                    var newScale = (maxSize * currentSize.Value) * startScale;
                     if (!(transform.localScale.x < 0.1f)) {
                         transform.localScale = newScale;
                     }
@@ -98,21 +95,19 @@ namespace Entities.Player.PlayerInput
 
         public void AddSize(float value)
         {
-            currentSize += value;
-            var newScale = (maxSize * currentSize) * startScale;
+            currentSize.Value += value;
+            var newScale = (maxSize * currentSize.Value) * startScale;
             transform.localScale = newScale;
         }
-        
+
         public void ForceMelt()
         {
             MeltOverDistance();
         }
 
-        [Button]
-        private void ResetMelt()
+        private void OnDeath()
         {
-            transform.localScale = Vector3.one;
-            currentSize = 1;
+            SceneLoader.Instance.ReloadScene();
         }
     }
 }

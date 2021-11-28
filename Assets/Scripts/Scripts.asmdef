@@ -4,7 +4,9 @@
     "references": [
         "com.philfors.usefulcode.runtime",
         "Unity.InputSystem",
-        "UniTask"
+        "UniTask",
+        "Unity.TextMeshPro",
+        "ThirdParty"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
