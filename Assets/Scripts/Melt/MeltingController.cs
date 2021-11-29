@@ -10,9 +10,10 @@ namespace Entities.Player.PlayerInput
             get => currentSize.Value;
             set => currentSize.Value = value;
         }
+
         public float meltOverDistanceAmount = 0.2f;
         public bool isDummy;
-        
+
         [SerializeField] private PlayerController playerController;
         [SerializeField] private bool stopMeltOnCollision = true;
         [SerializeField] private bool meltOnce;
@@ -84,11 +85,11 @@ namespace Entities.Player.PlayerInput
 
             if (!meltOnce) {
                 var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
-                if (diff > 0.001) {
+                if (diff > 0.0001) {
                     currentSize.Value -= diff;
 
                     var newScale = (maxSize * currentSize.Value) * startScale;
-                    if (!(transform.localScale.x < 0.1f)) {
+                    if (newScale.x > 0.15f) {
                         transform.localScale = newScale;
                     }
                 }

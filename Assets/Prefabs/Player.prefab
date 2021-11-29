@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 7335334862066920857}
   - component: {fileID: 8590812641535443581}
   - component: {fileID: 5849337299000561553}
-  - component: {fileID: 6737504379184284388}
+  - component: {fileID: 5442140679192682997}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &6737504379184284388
+--- !u!114 &5442140679192682997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -620,6 +620,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSize: {fileID: 11400000, guid: 56e3152cff24f62498ff61b22f2bdfa9, type: 2}
   text: {fileID: 5849337299000561553}
-  okColor: {r: 0.5229777, g: 1, b: 0.5469692, a: 1}
-  warningColor: {r: 1, g: 0.8818508, b: 0.3814683, a: 1}
-  dangerColor: {r: 1, g: 0.24717835, b: 0.23995888, a: 1}
+  okColor: {r: 0.16079499, g: 0.9245283, b: 0.41351485, a: 1}
+  warningColor: {r: 0.9245283, g: 0.8565327, b: 0.19568287, a: 1}
+  dangerColor: {r: 0.8867924, g: 0.22115965, b: 0.2575935, a: 1}
