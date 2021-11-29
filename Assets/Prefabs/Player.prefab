@@ -113,11 +113,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55457d71af064b12b3d3cbecb95c8a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meltOverDistanceAmount: 0.2
   isDummy: 0
   playerController: {fileID: 2289752304218796815}
   stopMeltOnCollision: 1
   meltOnce: 0
-  meltOverDistanceAmount: 0.2
   meltOnceAmount: 0.1
   currentSize: {fileID: 11400000, guid: 56e3152cff24f62498ff61b22f2bdfa9, type: 2}
   maxSize: 1
@@ -370,8 +370,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 188a92cfacce400c8c7b0ef8461b2ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeStep: 0.08
-  iterations: 15
+  previewPlayer: {fileID: 7559176352898065576, guid: 12592fc6c4ac93544ae0148bbda338ee, type: 3}
+  dummyPrefab: {fileID: 5259415608200587492, guid: 788c0399bddb70643888dc67f734e92f, type: 3}
+  timeStep: 0.0222
+  iterations: 50
   lineRenderer: {fileID: 6795238874258091583}
 --- !u!120 &6795238874258091583
 LineRenderer:

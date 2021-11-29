@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
         onRelase?.Invoke();
         hasCollided = false;
-        TrajectoryPredictor.Instance.Disable();
+        NewTrajectoryPredictor.Instance.Disable();
     }
 
     private void OnCollisionEnter(Collision other)

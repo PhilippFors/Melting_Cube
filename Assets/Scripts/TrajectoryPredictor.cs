@@ -111,7 +111,8 @@ public class TrajectoryPredictor : SingletonBehaviour<TrajectoryPredictor>
             var dummyMeltingController = ghostObj.GetComponent<MeltingController>();
             dummyMeltingController.maxSize = realMeltingController.maxSize;
             dummyMeltingController.startScale = realMeltingController.startScale;
-
+            dummyMeltingController.meltOverDistanceAmount = realMeltingController.meltOverDistanceAmount;
+            
             var dummyCollisionDetector = ghostObj.GetComponent<DummyCollisionDetector>();
 
             dummyMeltingController.isDummy = true;
@@ -126,7 +127,7 @@ public class TrajectoryPredictor : SingletonBehaviour<TrajectoryPredictor>
             for (int i = 0; i < iterations; i++) {
                 physScene.Simulate(timeStep);
 
-                dummyMeltingController.ForceMelt();
+                // dummyMeltingController.ForceMelt();
 
                 positions.Add(ghostObj.transform.position);
 

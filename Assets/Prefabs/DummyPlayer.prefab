@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5259415608200587492}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -94,7 +94,7 @@ BoxCollider:
   m_GameObject: {fileID: 5259415608200587492}
   m_Material: {fileID: 13400000, guid: 3a51e7e5c5000ee438fcf9d4fde6fb90, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -139,12 +139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55457d71af064b12b3d3cbecb95c8a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meltOverDistanceAmount: 0.1
   isDummy: 1
   playerController: {fileID: 0}
-  stopMeltOnCollision: 0
+  stopMeltOnCollision: 1
   meltOnce: 0
-  meltOverDistanceAmount: 0.1
   meltOnceAmount: 0.1
-  currentSize: 1
+  currentSize: {fileID: 11400000, guid: eb0fc99c1d560b64caea9bada6af56bc, type: 2}
   maxSize: 1
   startScale: {x: 0, y: 0, z: 0}

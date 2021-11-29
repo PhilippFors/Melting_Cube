@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
         SetSize(currentSize.Value);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         currentSize.onValueChanged -= SetSize;
     }

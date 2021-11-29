@@ -5,13 +5,17 @@ namespace Entities.Player.PlayerInput
 {
     public class MeltingController : MonoBehaviour
     {
-        public float CurrentSize => currentSize.Value;
-
+        public float CurrentSize
+        {
+            get => currentSize.Value;
+            set => currentSize.Value = value;
+        }
+        public float meltOverDistanceAmount = 0.2f;
         public bool isDummy;
+        
         [SerializeField] private PlayerController playerController;
-        [SerializeField] private bool stopMeltOnCollision;
+        [SerializeField] private bool stopMeltOnCollision = true;
         [SerializeField] private bool meltOnce;
-        [SerializeField] private float meltOverDistanceAmount;
         [SerializeField] private float meltOnceAmount;
         [SerializeField] private FloatVariable currentSize;
 
@@ -100,8 +104,10 @@ namespace Entities.Player.PlayerInput
             transform.localScale = newScale;
         }
 
-        public void ForceMelt()
+        public void ForceMelt(Vector3 currentPos, Vector3 oldPos)
         {
+            oldPosition = oldPos;
+            transform.position = currentPos;
             MeltOverDistance();
         }
 
