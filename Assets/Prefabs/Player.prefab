@@ -138,7 +138,7 @@ MonoBehaviour:
   sensitivity: {x: 8, y: 12}
   clamPoint: {x: -1.5, y: 1.5}
   absoluteDelta: {x: 0, y: 0}
-  force: 5
+  force: 6
   maxDistance: 2.5
   distance: 0
   hasCollided: 1
@@ -392,7 +392,7 @@ LineRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e2f13090b4efc4544bef642e5bd7d9ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
