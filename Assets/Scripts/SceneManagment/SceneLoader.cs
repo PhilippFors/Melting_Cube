@@ -1,3 +1,4 @@
+using Entities.Player.PlayerInput;
 using UnityEngine.SceneManagement;
 using UsefulCode.SOArchitecture.Utility;
 using UsefulCode.Utilities;
@@ -5,7 +6,7 @@ using UsefulCode.Utilities;
 public class SceneLoader : SingletonBehaviour<SceneLoader>
 {
     public SceneInfo[] scenes;
-    public SceneInfo activeScene;
+    private SceneInfo activeScene;
     private int activeLevel;
 
     private void Start()
@@ -38,12 +39,18 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
         else {
             SceneManager.LoadScene(index, LoadSceneMode.Single);
         }
+        
+        PlayerInputController.Instance.EnableControls();
     }
 
     public void LoadNextLevel()
     {
         activeLevel++;
         if (activeLevel < scenes.Length) {
+            LoadScene(scenes[activeLevel]);
+        }
+        else {
+            activeLevel = 0;
             LoadScene(scenes[activeLevel]);
         }
     }
