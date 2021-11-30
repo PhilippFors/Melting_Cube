@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2289752304218796813}
   - component: {fileID: 2289752304218796808}
   - component: {fileID: 2289752304218796815}
-  - component: {fileID: 2289752304218796809}
   - component: {fileID: 2289752304218796814}
   m_Layer: 0
   m_Name: Player
@@ -142,74 +141,6 @@ MonoBehaviour:
   maxDistance: 2.5
   distance: 0
   hasCollided: 1
---- !u!114 &2289752304218796809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2289752304218796816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36f4f7dfc65c4334d87a729ef8089232, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
-  mousePositionAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Mouse Position
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: dbe39d35-4e50-42b3-8524-9ad19831f04b
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Reference: {fileID: 7983659509382484512, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
-  mouseDeltaAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Mouse Delta
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 34b755d2-acf5-4e86-bec9-d4b1ebb61436
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Reference: {fileID: -1164989310613213162, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
-  leftMouseButtonAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Left Mouse Button
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: f97d414b-8a8b-4d0f-9e00-e5f31b4d95b9
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Reference: {fileID: 3451125761540402623, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
-  rightMouseButtonAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Right Mouse Button
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: e8c82ebd-321f-4be7-8e40-6ffa63ac1bfb
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Reference: {fileID: 6086124540840511803, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
-  pauseAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Pause
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 9a7692c7-1b09-4cdb-97a2-863fde64a6e1
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Reference: {fileID: 5162386383651137556, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
 --- !u!54 &2289752304218796814
 Rigidbody:
   m_ObjectHideFlags: 0

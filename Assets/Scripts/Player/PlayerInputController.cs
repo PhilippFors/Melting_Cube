@@ -1,3 +1,4 @@
+using System;
 using UsefulCode.Input;
 using UsefulCode.Utilities;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Entities.Player.PlayerInput
         public InputActionData<float> LeftMouseButton => leftMouseButton ?? (leftMouseButton = new InputActionData<float>(leftMouseButtonAction));
         public InputActionData<float> RightMouseButton => rightMouseButton ?? (rightMouseButton = new InputActionData<float>(rightMouseButtonAction));
         public InputActionData<float> Pause => pause ?? (pause = new InputActionData<float>(pauseAction));
+        public InputActionData<float> Quit => quit ?? (quit = new InputActionData<float>(quitAction));
 
         [SerializeField] private InputActionAsset inputActions;
 
@@ -24,12 +26,20 @@ namespace Entities.Player.PlayerInput
         [SerializeField] private InputActionProperty leftMouseButtonAction;
         [SerializeField] private InputActionProperty rightMouseButtonAction;
         [SerializeField] private InputActionProperty pauseAction;
+        [SerializeField] private InputActionProperty quitAction;
 
         private InputActionData<Vector2> mousePosition;
         private InputActionData<Vector2> mouseDelta;
         private InputActionData<float> leftMouseButton;
         private InputActionData<float> rightMouseButton;
         private InputActionData<float> pause;
+        private InputActionData<float> quit;
+
+        public override void Awake()
+        {
+            base.Awake();
+            DontDestroyOnLoad(gameObject);
+        }
 
         private void OnEnable()
         {
@@ -40,7 +50,7 @@ namespace Entities.Player.PlayerInput
         {
             DisableControls();
         }
-
+        
         public void EnableControls()
         {
             foreach (var action in inputActions)
