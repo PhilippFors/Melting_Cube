@@ -52,8 +52,7 @@ public class PlayerController : MonoBehaviour
 
     private bool GroundCheck()
     {
-        return Physics.CheckBox(transform.position, visual.transform.localScale / 2 + new Vector3(0.1f, 0.1f, 0.1f), transform.rotation,
-            LayerMask.GetMask("Ground"));
+        return Physics.CheckBox(transform.position, visual.transform.localScale / 2 + new Vector3(0.05f, 0.05f, 0.05f), transform.rotation, LayerMask.GetMask("Ground"));
     }
 
     private void DistanceBased() // based and asianwifepilled
@@ -111,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
         if (lmbPressed) {
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity)) {
-                var player = hit.transform.GetComponent<PlayerController>();
+                var player = hit.transform.GetComponentInParent<PlayerController>();
                 if (player) {
                     canThrow = true;
                     hitPlayer = true;
