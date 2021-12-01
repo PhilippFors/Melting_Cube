@@ -3,6 +3,9 @@ using Entities.Player.PlayerInput;
 using UnityEngine;
 using UsefulCode.Utilities;
 
+/// <summary>
+/// Calculates a list of points base on velocity and gravity.
+/// </summary>
 public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
 {
     public GameObject previewPlayer;
@@ -11,6 +14,7 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
     [SerializeField] private int iterations = 10;
     [SerializeField] private LineRenderer lineRenderer;
 
+    private GameObject previewVisual;
     private GameObject dummy;
     private bool isInstantiated;
 
@@ -18,14 +22,19 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
     public void Simulate(GameObject player, Vector3 initVel, Vector3 force)
     {
         var tempPos = new List<Vector3>();
+        var tempScales = new List<Vector3>();
+        var tempSizes = new List<float>();
         var meltingController = player.GetComponent<MeltingController>();
-        
+
         if (!isInstantiated) {
+            previewVisual = previewPlayer.GetComponentInChildren<MeshRenderer>().gameObject;
             dummy = Instantiate(dummyPrefab, player.transform.position, player.transform.rotation);
             isInstantiated = true;
         }
-        
+
+        var rb = player.GetComponent<Rigidbody>();
         var dummyController = dummy.GetComponent<MeltingController>();
+        
         dummyController.CurrentSize = meltingController.CurrentSize;
         dummyController.startScale = meltingController.startScale;
         dummyController.maxSize = meltingController.maxSize;
@@ -37,8 +46,10 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
         var previousPoint = startPoint;
 
         dummyController.ForceMelt(startPoint, startPoint);
+        
+        tempSizes.Add(dummyController.CurrentSize);
         for (int i = 0; i < iterations; i++) {
-            var point = GetPoint(startPoint, initVel + force, (i + 2) * timeStep);
+            var point = GetPoint(startPoint, initVel + force, rb.mass, (i + 2) * timeStep);
             dummyController.ForceMelt(point, previousPoint);
             previousPoint = point;
             
@@ -46,7 +57,7 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
                 Quaternion.identity, LayerMask.GetMask("Default"));
 
             if (cols.Length > 0) {
-                for (int j = 0; j < cols.Length;j++) {
+                for (int j = 0; j < cols.Length; j++) {
                     var sizeCol = cols[j].GetComponent<SizeCollectable>();
                     if (sizeCol && !sizeCollectables.Contains(sizeCol)) {
                         dummyController.AddSize(sizeCol.addSize);
@@ -54,41 +65,50 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
                     }
                 }
             }
-        
-            if (Physics.CheckBox(point, dummyController.transform.localScale / 2, Quaternion.identity,
-                LayerMask.GetMask("Ground"))) {
-                break;
-            }
-
+            
+            tempScales.Add(dummyController.transform.localScale);
+            tempSizes.Add(dummyController.CurrentSize);
             tempPos.Add(point);
         }
 
-        var pos = tempPos.ToArray();
-        lineRenderer.positionCount = pos.Length;
-        var newSize = dummyController.CurrentSize;
-        var newScale = (dummyController.maxSize * newSize) * dummyController.startScale;
-        previewPlayer.transform.localScale = newScale;
         
-        if (pos.Length > 1) {
-            previewPlayer.transform.position = pos[pos.Length - 1];
+        var pos = new List<Vector3>();
+        float size = 0;
+        for (int i = 0; i < tempPos.Count; i++) {
+            if (!Physics.CheckBox(tempPos[i], tempScales[i] / 2, Quaternion.identity, LayerMask.GetMask("Ground"))) {
+                pos.Add(tempPos[i]);
+                size = tempSizes[i];
+            }
+            else {
+                break;
+            }
         }
 
-        lineRenderer.SetPositions(pos);
+        dummyController.CurrentSize = size;
+        var newScale = (dummyController.maxSize * size) * dummyController.startScale;
+        previewVisual.transform.localScale = newScale;
+        lineRenderer.positionCount = pos.Count;
+
+        if (pos.Count > 1) {
+            previewPlayer.transform.position = pos[pos.Count - 1];
+        }
+        
+        lineRenderer.SetPositions(pos.ToArray());
     }
 
-    public void Enable()
+    public void EnableTrajectory()
     {
         lineRenderer.enabled = true;
         previewPlayer.SetActive(true);
     }
 
-    public void Disable()
+    public void DisableTrajectory()
     {
         lineRenderer.enabled = false;
         previewPlayer.SetActive(false);
         lineRenderer.positionCount = 0;
     }
 
-    private Vector3 GetPoint(Vector3 start, Vector3 force, float t) =>
-        (start + force * t) + Physics.gravity * (0.5f * Mathf.Pow(t, 2));
+    private Vector3 GetPoint(Vector3 start, Vector3 force, float mass, float t) =>
+        (start + force / mass * t) + Physics.gravity * (t * t) / 2;
 }

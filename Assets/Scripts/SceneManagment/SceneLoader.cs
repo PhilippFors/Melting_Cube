@@ -6,7 +6,7 @@ using UsefulCode.Utilities;
 public class SceneLoader : SingletonBehaviour<SceneLoader>
 {
     public SceneInfo[] scenes;
-    private SceneInfo activeScene;
+    public SceneInfo activeScene;
     private int activeLevel;
 
     private void Start()

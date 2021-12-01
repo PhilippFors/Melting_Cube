@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UsefulCode.Input;
 using UsefulCode.Utilities;
 using UnityEngine;
@@ -12,10 +13,19 @@ namespace Entities.Player.PlayerInput
     /// </summary>
     public class PlayerInputController : SingletonBehaviour<PlayerInputController>
     {
-        public InputActionData<Vector2> MousePosition => mousePosition ?? (mousePosition = new InputActionData<Vector2>(mousePositionAction));
-        public InputActionData<Vector2> MouseDelta => mouseDelta ?? (mouseDelta = new InputActionData<Vector2>(mouseDeltaAction));
-        public InputActionData<float> LeftMouseButton => leftMouseButton ?? (leftMouseButton = new InputActionData<float>(leftMouseButtonAction));
-        public InputActionData<float> RightMouseButton => rightMouseButton ?? (rightMouseButton = new InputActionData<float>(rightMouseButtonAction));
+        public InputActionData<Vector2> MousePosition =>
+            mousePosition ?? (mousePosition = new InputActionData<Vector2>(mousePositionAction));
+
+        public InputActionData<Vector2> MouseDelta =>
+            mouseDelta ?? (mouseDelta = new InputActionData<Vector2>(mouseDeltaAction));
+
+        public InputActionData<float> LeftMouseButton =>
+            leftMouseButton ?? (leftMouseButton = new InputActionData<float>(leftMouseButtonAction));
+
+        public InputActionData<float> RightMouseButton => rightMouseButton ??
+                                                          (rightMouseButton =
+                                                              new InputActionData<float>(rightMouseButtonAction));
+
         public InputActionData<float> Pause => pause ?? (pause = new InputActionData<float>(pauseAction));
         public InputActionData<float> Quit => quit ?? (quit = new InputActionData<float>(quitAction));
 
@@ -46,23 +56,23 @@ namespace Entities.Player.PlayerInput
             EnableControls();
         }
 
-        private void OnDisable()
-        {
-            DisableControls();
-        }
-        
+        // private void OnDestroy()
+        // {
+        //     DisableControls();
+        // }
+
+        [Button]
         public void EnableControls()
         {
-            foreach (var action in inputActions)
-            {
+            foreach (var action in inputActions) {
                 action?.Enable();
             }
         }
 
+        [Button]
         public void DisableControls()
         {
-            foreach (var action in inputActions)
-            {
+            foreach (var action in inputActions) {
                 action?.Disable();
             }
         }

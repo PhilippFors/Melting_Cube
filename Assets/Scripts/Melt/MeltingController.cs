@@ -14,6 +14,7 @@ namespace Entities.Player.PlayerInput
         public float meltOverDistanceAmount = 0.2f;
         public bool isDummy;
 
+        [SerializeField] private GameObject visual;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private bool stopMeltOnCollision = true;
         [SerializeField] private bool meltOnce;
@@ -36,7 +37,14 @@ namespace Entities.Player.PlayerInput
         public void Init()
         {
             currentSize.Value = maxSize;
-            startScale = transform.localScale;
+            
+            if (!isDummy) {
+                startScale = visual.transform.localScale;
+            }
+            else {
+                startScale = transform.localScale;
+            }
+
             oldPosition = transform.position;
         }
 
@@ -73,9 +81,9 @@ namespace Entities.Player.PlayerInput
                 return;
             }
 
-            var newScale = transform.localScale - new Vector3(meltOnceAmount, meltOnceAmount, meltOnceAmount);
+            var newScale = visual.transform.localScale - new Vector3(meltOnceAmount, meltOnceAmount, meltOnceAmount);
 
-            transform.localScale = newScale;
+            SetScale(newScale);
         }
 
         private void MeltOverDistance()
@@ -89,8 +97,8 @@ namespace Entities.Player.PlayerInput
                     currentSize.Value -= diff;
 
                     var newScale = (maxSize * currentSize.Value) * startScale;
-                    if (newScale.x > 0.15f) {
-                        transform.localScale = newScale;
+                    if (newScale.x > 0.1f) {
+                        SetScale(newScale);
                     }
                 }
             }
@@ -102,7 +110,17 @@ namespace Entities.Player.PlayerInput
         {
             currentSize.Value += value;
             var newScale = (maxSize * currentSize.Value) * startScale;
-            transform.localScale = newScale;
+            SetScale(newScale);
+        }
+
+        private void SetScale(Vector3 newScale)
+        {
+            if (!isDummy) {
+                visual.transform.localScale = newScale;
+            }
+            else {
+                transform.localScale = newScale;
+            }
         }
 
         public void ForceMelt(Vector3 currentPos, Vector3 oldPos)

@@ -25,8 +25,7 @@ public class PlayerController : MonoBehaviour
     private bool rmbPressed => PlayerInputController.Instance.RightMouseButton.IsPressed;
     private Plane plane;
     private Vector3 direction;
-    private bool isGrounded;
-    
+
     private void Start()
     {
         cam = Camera.main;
@@ -43,13 +42,17 @@ public class PlayerController : MonoBehaviour
                 DeltaBased();
             }
         }
-        
-        
+        else {
+            canThrow = false;
+            hitPlayer = false;
+            NewTrajectoryPredictor.Instance.DisableTrajectory();
+        }
     }
 
     private bool GroundCheck()
     {
-        return Physics.CheckSphere(transform.position, transform.localScale.x + 0.05f, LayerMask.GetMask("Ground"));
+        return Physics.CheckBox(transform.position, transform.localScale / 2 + new Vector3(0.1f, 0.1f, 0.1f), transform.rotation,
+            LayerMask.GetMask("Ground"));
     }
 
     private void DistanceBased() // based and asianwifepilled
@@ -59,7 +62,7 @@ public class PlayerController : MonoBehaviour
         if (rmbPressed) {
             canThrow = false;
             hitPlayer = false;
-            NewTrajectoryPredictor.Instance.Disable();
+            NewTrajectoryPredictor.Instance.DisableTrajectory();
             return;
         }
         
@@ -89,12 +92,8 @@ public class PlayerController : MonoBehaviour
             distance = Vector3.Distance(point, transform.position);
             distance = Mathf.Clamp(distance, 0, maxDistance);
             
-            NewTrajectoryPredictor.Instance.Enable();
-            //TODO: Find a better way to do trajectories. Use phys sym for only checking collisions
-            // if (!TrajectoryPredictor.Instance.isRunning) {
-            //     TrajectoryPredictor.Instance.SimulateTrajectory(gameObject, transform.position, direction * (distance * force)).Forget();
-            // }
             NewTrajectoryPredictor.Instance.Simulate(this.gameObject, rb.velocity, direction * (distance * force));
+            NewTrajectoryPredictor.Instance.EnableTrajectory();
         }
     }
 
@@ -149,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
         onRelase?.Invoke();
         hasCollided = false;
-        NewTrajectoryPredictor.Instance.Disable();
+        NewTrajectoryPredictor.Instance.DisableTrajectory();
     }
 
     private void OnCollisionEnter(Collision other)
