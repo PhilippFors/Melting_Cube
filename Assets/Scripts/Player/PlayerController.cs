@@ -5,7 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     public bool HasCollided => hasCollided;
     public event System.Action onRelase;
-    
+
+    [SerializeField] private GameObject visual;
     [SerializeField] private bool useMouseDistance;
     [SerializeField] private Vector2 sensitivity = new Vector2(2, 4);
     [SerializeField] private Vector2 clamPoint = new Vector2(-1, 1);
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
     private bool GroundCheck()
     {
-        return Physics.CheckBox(transform.position, transform.localScale / 2 + new Vector3(0.1f, 0.1f, 0.1f), transform.rotation,
+        return Physics.CheckBox(transform.position, visual.transform.localScale / 2 + new Vector3(0.1f, 0.1f, 0.1f), transform.rotation,
             LayerMask.GetMask("Ground"));
     }
 

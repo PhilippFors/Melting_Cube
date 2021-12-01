@@ -7,7 +7,7 @@ public class SizeCollectable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var meltythingy = other.GetComponent<MeltingController>();
+        var meltythingy = other.GetComponentInParent<MeltingController>();
         if (meltythingy && !meltythingy.isDummy) {
             meltythingy.AddSize(addSize);
             Destroy(gameObject);

@@ -6,7 +6,7 @@ using UsefulCode.Utilities;
 public class SceneLoader : SingletonBehaviour<SceneLoader>
 {
     public SceneInfo[] scenes;
-    public SceneInfo activeScene;
+    public int activeScene;
     private int activeLevel;
 
     private void Start()
@@ -15,7 +15,7 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
         var a = SceneManager.GetActiveScene();
         foreach (var s in scenes) {
             if (a.buildIndex == s.SceneIndex) {
-                activeScene = s;
+                activeScene = s.SceneIndex;
             }
         }
     }
@@ -28,7 +28,7 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
     public void LoadScene(SceneInfo scene, bool asyncLoad = true)
     {
         LoadScene(scene.SceneIndex, asyncLoad);
-        activeScene = scene;
+        activeScene = scene.SceneIndex;
     }
     
     public void LoadScene(int index, bool asyncLoad = true)

@@ -6,7 +6,7 @@ public class VictoryZone : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) {
-            var melt = other.GetComponent<MeltingController>();
+            var melt = other.GetComponentInParent<MeltingController>();
             melt.enabled = false;
             PlayerInputController.Instance.DisableControls();
             SceneLoader.Instance.LoadNextLevel();

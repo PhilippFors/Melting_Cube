@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Exposure
   m_EditorClassIdentifier: 
   active: 1
+  <displayName>k__BackingField: 
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 0
@@ -38,10 +39,8 @@ MonoBehaviour:
   curveMap:
     m_OverrideState: 0
     m_Value:
-      serializedVersion: 2
       m_Curve:
-      - serializedVersion: 3
-        time: -10
+      - time: -10
         value: -10
         inSlope: 0
         outSlope: 1
@@ -49,8 +48,7 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - serializedVersion: 3
-        time: 20
+      - time: 20
         value: 20
         inSlope: 1
         outSlope: 0
@@ -64,10 +62,8 @@ MonoBehaviour:
   limitMinCurveMap:
     m_OverrideState: 0
     m_Value:
-      serializedVersion: 2
       m_Curve:
-      - serializedVersion: 3
-        time: -10
+      - time: -10
         value: -12
         inSlope: 0
         outSlope: 1
@@ -75,8 +71,7 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - serializedVersion: 3
-        time: 20
+      - time: 20
         value: 18
         inSlope: 1
         outSlope: 0
@@ -90,10 +85,8 @@ MonoBehaviour:
   limitMaxCurveMap:
     m_OverrideState: 0
     m_Value:
-      serializedVersion: 2
       m_Curve:
-      - serializedVersion: 3
-        time: -10
+      - time: -10
         value: -8
         inSlope: 0
         outSlope: 1
@@ -101,8 +94,7 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - serializedVersion: 3
-        time: 20
+      - time: 20
         value: 22
         inSlope: 1
         outSlope: 0
@@ -170,6 +162,7 @@ MonoBehaviour:
   m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
+  <displayName>k__BackingField: 
   m_AdvancedMode: 0
   quality:
     m_OverrideState: 1
@@ -190,7 +183,11 @@ MonoBehaviour:
     max: 1
   tint:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -225,10 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
   m_Name: Global Volume Profile
   m_EditorClassIdentifier: 
-  components:
-  - {fileID: -3647814338554807483}
-  - {fileID: 4818860535282086028}
-  - {fileID: -684449626577244188}
+  components: []
 --- !u!114 &4818860535282086028
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -242,6 +236,7 @@ MonoBehaviour:
   m_Name: HDRISky
   m_EditorClassIdentifier: 
   active: 1
+  <displayName>k__BackingField: 
   m_AdvancedMode: 0
   rotation:
     m_OverrideState: 0
@@ -253,7 +248,7 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.41
   multiplier:
     m_OverrideState: 0
     m_Value: 1
@@ -338,7 +333,11 @@ MonoBehaviour:
     max: 100
   shadowTint:
     m_OverrideState: 0
-    m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    m_Value:
+      r: 0.5
+      g: 0.5
+      b: 0.5
+      a: 1
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
