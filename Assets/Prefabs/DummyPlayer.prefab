@@ -43,12 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55457d71af064b12b3d3cbecb95c8a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meltOverDistanceAmount: 0.1
   isDummy: 1
+  meltOverDistanceAmount: 0.1
+  startSize: 0
+  maxMass: 0.8
+  minMass: 1.2
+  minSize: 0.1
+  maxSize: 2
+  visual: {fileID: 0}
   playerController: {fileID: 0}
   stopMeltOnCollision: 1
-  meltOnce: 0
-  meltOnceAmount: 0.1
   currentSize: {fileID: 11400000, guid: eb0fc99c1d560b64caea9bada6af56bc, type: 2}
-  maxSize: 1
   startScale: {x: 0, y: 0, z: 0}

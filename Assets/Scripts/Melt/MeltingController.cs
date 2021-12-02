@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UsefulCode.SOArchitecture;
 
 namespace Entities.Player.PlayerInput
@@ -11,33 +12,36 @@ namespace Entities.Player.PlayerInput
             set => currentSize.Value = value;
         }
 
-        public float meltOverDistanceAmount = 0.2f;
         public bool isDummy;
+        public float meltOverDistanceAmount = 0.2f;
+        [HideInInspector] public float startSize;
 
+        [SerializeField] private float minMass = 0.5f;
+        [SerializeField] private float maxMass = 1.5f;
+        [SerializeField] private float minSize = 0.1f;
+        [SerializeField] private float maxSize = 2f;
         [SerializeField] private GameObject visual;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private bool stopMeltOnCollision = true;
-        [SerializeField] private bool meltOnce;
-        [SerializeField] private float meltOnceAmount;
         [SerializeField] private FloatVariable currentSize;
+        [SerializeField] private Rigidbody rb;
+
 
         private Vector3 oldPosition;
-        public float maxSize = 1;
         public Vector3 startScale;
+        private float lastSize;
 
         private void Start()
         {
             Init();
-
-            if (playerController) {
-                playerController.onRelase += MeltOnce;
-            }
         }
 
         public void Init()
         {
-            currentSize.Value = maxSize;
-            
+            CurrentSize = 1;
+            lastSize = CurrentSize;
+            startSize = CurrentSize;
+
             if (!isDummy) {
                 startScale = visual.transform.localScale;
             }
@@ -46,13 +50,8 @@ namespace Entities.Player.PlayerInput
             }
 
             oldPosition = transform.position;
-        }
 
-        private void OnDisable()
-        {
-            if (playerController) {
-                playerController.onRelase -= MeltOnce;
-            }
+            SetMass();
         }
 
         private void Update()
@@ -75,32 +74,29 @@ namespace Entities.Player.PlayerInput
             }
         }
 
-        private void MeltOnce()
+        private float Remap(float from1, float to1, float from2, float to2, float value) =>
+            from2 + (value - from1) * (to2 - from2) / (to1 - from1);
+        
+
+        private void SetMass()
         {
-            if (!meltOnce) {
-                return;
+            if (rb) {
+                rb.mass = Remap(minSize, maxSize, minMass, maxMass, CurrentSize);
+                Debug.Log(rb.mass);
             }
-
-            var newScale = visual.transform.localScale - new Vector3(meltOnceAmount, meltOnceAmount, meltOnceAmount);
-
-            SetScale(newScale);
         }
-
         private void MeltOverDistance()
         {
             var newPos = transform.position;
 
+            var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
+            if (diff > 0.0001) {
+                currentSize.Value -= diff;
 
-            if (!meltOnce) {
-                var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
-                if (diff > 0.0001) {
-                    currentSize.Value -= diff;
-
-                    var newScale = (maxSize * currentSize.Value) * startScale;
-                    if (newScale.x > 0.1f) {
-                        SetScale(newScale);
-                    }
-                }
+                // var newScale = (maxSize * currentSize.Value) * startScale;
+                // if (newScale.x > 0.1f) {
+                //     SetScale();
+                // }
             }
 
             oldPosition = newPos;
@@ -109,17 +105,30 @@ namespace Entities.Player.PlayerInput
         public void AddSize(float value)
         {
             currentSize.Value += value;
-            var newScale = (maxSize * currentSize.Value) * startScale;
-            SetScale(newScale);
+            SetScale();
         }
 
-        private void SetScale(Vector3 newScale)
+        private void SetScale()
         {
-            if (!isDummy) {
-                visual.transform.localScale = newScale;
+            var newScale = (startSize * currentSize.Value) * startScale;
+            if (newScale.x > 0.1f) {
+                if (!isDummy) {
+                    visual.transform.localScale = newScale;
+                }
+                else {
+                    transform.localScale = newScale;
+                }
             }
-            else {
-                transform.localScale = newScale;
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.transform.CompareTag("Ground") || other.transform.CompareTag("Wall")) {
+                if (Mathf.Abs(CurrentSize - lastSize) > 0.1f) {
+                    SetMass();
+                    SetScale();
+                    lastSize = CurrentSize;
+                }
             }
         }
 

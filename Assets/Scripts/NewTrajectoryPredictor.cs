@@ -37,7 +37,7 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
         
         dummyController.CurrentSize = meltingController.CurrentSize;
         dummyController.startScale = meltingController.startScale;
-        dummyController.maxSize = meltingController.maxSize;
+        dummyController.startSize = meltingController.startSize;
         dummyController.meltOverDistanceAmount = meltingController.meltOverDistanceAmount;
         dummy.transform.localScale = player.GetComponentInChildren<MeshRenderer>().transform.localScale;
 
@@ -85,7 +85,7 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
         }
 
         dummyController.CurrentSize = size;
-        var newScale = (dummyController.maxSize * size) * dummyController.startScale;
+        var newScale = (dummyController.startSize * size) * dummyController.startScale;
         previewVisual.transform.localScale = newScale;
         lineRenderer.positionCount = pos.Count;
 

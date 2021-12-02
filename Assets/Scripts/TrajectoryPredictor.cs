@@ -28,38 +28,38 @@ public class TrajectoryPredictor : SingletonBehaviour<TrajectoryPredictor>
     private void Start()
     {
         lineRenderer.enabled = false;
-        CreatePhysicsScene();
+        // CreatePhysicsScene();
     }
 
     private void Update()
     {
-        if (oldPositions.Count > 0 && lineRenderer.positionCount > 0) {
-            for (int i = 0; i < iterations; i++) {
-                lineRenderer.SetPosition(i, oldPositions[i]);
-            }
-        }
-
-        if (dummyPlayer.activeSelf) {
-            if (collisions.Count > 1) {
-                // foreach (var c in collisions) {
-                    if (Vector3.Distance(collisions[collisions.Count -1], transform.position) > 2f) {
-                        previewPlayer.transform.position = new Vector3(transform.position.x, collisions[collisions.Count -1].y, collisions[collisions.Count -1].z);
-                        // break;
-                    }
-                // }
-            }
-            else if (oldPositions.Count > 0) {
-                previewPlayer.transform.position = oldPositions[oldPositions.Count - 1];
-            }
-        }
+        // if (oldPositions.Count > 0 && lineRenderer.positionCount > 0) {
+        //     for (int i = 0; i < iterations; i++) {
+        //         lineRenderer.SetPosition(i, oldPositions[i]);
+        //     }
+        // }
+        //
+        // if (dummyPlayer.activeSelf) {
+        //     if (collisions.Count > 1) {
+        //         // foreach (var c in collisions) {
+        //             if (Vector3.Distance(collisions[collisions.Count -1], transform.position) > 2f) {
+        //                 previewPlayer.transform.position = new Vector3(transform.position.x, collisions[collisions.Count -1].y, collisions[collisions.Count -1].z);
+        //                 // break;
+        //             }
+        //         // }
+        //     }
+        //     else if (oldPositions.Count > 0) {
+        //         previewPlayer.transform.position = oldPositions[oldPositions.Count - 1];
+        //     }
+        // }
     }
 
     private void SetPreviewSize(MeltingController dummyMelter)
     {
-        var newScale = (dummyMelter.maxSize * predictiveSize) * dummyMelter.startScale;
-        if (previewPlayer.transform.localScale.x > 0.1f) {
-            previewPlayer.transform.localScale = newScale;
-        }
+        // var newScale = (dummyMelter.maxSize * predictiveSize) * dummyMelter.startScale;
+        // if (previewPlayer.transform.localScale.x > 0.1f) {
+        //     previewPlayer.transform.localScale = newScale;
+        // }
     }
 
     public void Enable()
@@ -109,7 +109,7 @@ public class TrajectoryPredictor : SingletonBehaviour<TrajectoryPredictor>
 
             var realMeltingController = player.GetComponent<MeltingController>();
             var dummyMeltingController = ghostObj.GetComponent<MeltingController>();
-            dummyMeltingController.maxSize = realMeltingController.maxSize;
+            // dummyMeltingController.maxSize = realMeltingController.maxSize;
             dummyMeltingController.startScale = realMeltingController.startScale;
             dummyMeltingController.meltOverDistanceAmount = realMeltingController.meltOverDistanceAmount;
             
