@@ -118,13 +118,13 @@ namespace Entities.Player.PlayerInput
             if (newScale.x > 0.1f) {
                 if (!isDummy) {
                     visual.transform.localScale = newScale;
+                    hitter.transform.localScale = newScale * 1.5f;
+
                 }
                 else {
                     transform.localScale = newScale;
                 }
             }
-
-            hitter.transform.localScale = newScale * 1.5f;
         }
 
         private void OnCollisionEnter(Collision other)
