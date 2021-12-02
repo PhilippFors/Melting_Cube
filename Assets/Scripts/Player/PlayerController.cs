@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool OnWall => onWall;
     public bool HasCollided => hasCollided;
-    public event System.Action onRelase;
 
     [SerializeField] private GameObject visual;
     [SerializeField] private bool useMouseDistance;
@@ -17,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxDistance = 4;
     [SerializeField] private float distance;
     [SerializeField] private bool hasCollided;
-    [SerializeField] private float wallSlideTime;
+    [SerializeField, Header("Wallslide")] private float wallSlideTime;
     [SerializeField] private float wallSlideDelay = 0.5f;
     [SerializeField] private float wallSlideSpeed = 5f;
     [SerializeField] private ParticleSystem wallSlideParticles;
@@ -31,11 +29,14 @@ public class PlayerController : MonoBehaviour
     private bool lmbPressed => PlayerInputController.Instance.LeftMouseButton.IsPressed;
     private bool rmbPressed => PlayerInputController.Instance.RightMouseButton.IsPressed;
     private Plane plane;
-    private Vector3 direction;
+    private Vector3 throwDirection;
+    
+    // Wallslide
     private bool canWallSlide;
     private bool onWall;
     private ContactPoint contact;
-    private Vector3 rayCastContact;
+    private Vector3 wallDir;
+    private Vector3 cross;
     private Coroutine wallSlide;
 
     private void Start()
@@ -61,42 +62,45 @@ public class PlayerController : MonoBehaviour
         }
 
         if (onWall) {
-            var dir = contact.point - transform.position;
-            var raycastDir = rayCastContact - transform.position;
-            var cross = Vector3.Cross(dir, contact.normal);
-            Debug.Log(cross);
-            var crossY = cross.y;
-            var crossZ = cross.z;
+            WallSlideMovement();
+        }
+    }
 
-            if (cross.y > 0) {
-                crossY = cross.y * -1;
-            }
+    private void WallSlideMovement()
+    {
+        var crossY = cross.y;
+        var crossZ = cross.z;
 
-            if (cross.z > 0 && cross.y < 0) {
-                crossZ = cross.z;
-            }
-            else if (cross.z > 0 && cross.y > 0) {
-                crossZ = -cross.z;
-            }
-            else if (cross.z < 0 && cross.y > 0) {
-                crossZ = -cross.z;
-            }
+        if (cross.y > 0) {
+            crossY = cross.y * -1;
+        }
 
-            var newCross = new Vector3(0, crossY, crossZ);
+        if (cross.z > 0 && cross.y < 0) {
+            crossZ = cross.z;
+        }
+        else if (cross.z > 0 && cross.y > 0) {
+            crossZ = -cross.z;
+        }
+        else if (cross.z < 0 && cross.y > 0) {
+            crossZ = -cross.z;
+        }
 
-            Physics.Raycast(transform.position, raycastDir, out var hit, visual.transform.localScale.x + 0.2f, LayerMask.GetMask("Ground"));
-            rayCastContact += newCross * (Time.deltaTime * wallSlideSpeed);
-            
-            if (hit.transform && hit.transform.CompareTag("Wall")) {
-                transform.position += newCross * (Time.deltaTime * wallSlideSpeed);
-            }
-            else {
-                StopWallSlide();
-            }
+        var newCross = new Vector3(0, crossY, crossZ);
 
-            if (Physics.Raycast(transform.position, newCross, visual.transform.localScale.x + 0.1f, LayerMask.GetMask("Ground"))) {
-                StopWallSlide();
-            }
+        Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f,
+            LayerMask.GetMask("Ground"));
+
+        if (hit.transform && hit.transform.CompareTag("Wall")) {
+            // rayCastContact += newCross * (Time.deltaTime * wallSlideSpeed);
+            transform.position += newCross * (Time.deltaTime * wallSlideSpeed);
+        }
+        else {
+            StopWallSlide();
+        }
+
+        if (Physics.Raycast(transform.position, newCross, visual.transform.localScale.x + 0.1f,
+            LayerMask.GetMask("Ground"))) {
+            StopWallSlide();
         }
     }
 
@@ -118,8 +122,8 @@ public class PlayerController : MonoBehaviour
         }
 
         if (lmbPressed) {
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity)) {
-                var player = hit.transform.GetComponent<PlayerController>();
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Hitter"))) {
+                var player = hit.transform.GetComponentInParent<PlayerController>();
                 if (player) {
                     canThrow = true;
                     hitPlayer = true;
@@ -138,11 +142,11 @@ public class PlayerController : MonoBehaviour
             plane = new Plane(Vector3.right, Vector3.zero);
             plane.Raycast(ray, out var d);
             var point = ray.GetPoint(d);
-            direction = (transform.position - point).normalized;
+            throwDirection = (transform.position - point).normalized;
             distance = Vector3.Distance(point, transform.position);
             distance = Mathf.Clamp(distance, 0, maxDistance);
 
-            NewTrajectoryPredictor.Instance.Simulate(gameObject, rb.velocity, direction * (distance * force));
+            NewTrajectoryPredictor.Instance.Simulate(gameObject, rb.velocity, throwDirection * (distance * force));
             NewTrajectoryPredictor.Instance.EnableTrajectory();
         }
     }
@@ -192,19 +196,20 @@ public class PlayerController : MonoBehaviour
         StopWallSlide();
 
         if (usemoused) {
-            rb.AddForce(direction * (distance * force), ForceMode.Impulse);
+            rb.AddForce(throwDirection * (distance * force), ForceMode.Impulse);
         }
         else {
             rb.AddForce(new Vector3(0, absoluteDelta.y * -1, absoluteDelta.x * -1) * force, ForceMode.Impulse);
         }
 
-        onRelase?.Invoke();
         hasCollided = false;
         NewTrajectoryPredictor.Instance.DisableTrajectory();
     }
 
     private void StartWallSlide(ContactPoint contact)
     {
+        wallDir = contact.point - transform.position;
+        cross = Vector3.Cross(wallDir, contact.normal);
         canWallSlide = false;
         onWall = true;
         wallSlideParticles.Play();
@@ -262,8 +267,10 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Wall") && canWallSlide) {
             var c = other.GetContact(0);
             contact = c;
-            rayCastContact = contact.point;
             StartWallSlide(c);
+
+            var tempContactPoint = new Vector3(visual.transform.localPosition.x, visual.transform.localPosition.y,  transform.InverseTransformPoint(contact.point).z);
+            wallSlideParticles.transform.localPosition = tempContactPoint;
         }
 
         if (other.gameObject.CompareTag("Ground")) {

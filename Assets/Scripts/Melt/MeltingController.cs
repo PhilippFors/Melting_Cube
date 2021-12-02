@@ -25,12 +25,13 @@ namespace Entities.Player.PlayerInput
         [SerializeField] private bool stopMeltOnCollision = true;
         [SerializeField] private FloatVariable currentSize;
         [SerializeField] private Rigidbody rb;
-
-
+        [SerializeField] private GameObject hitter;
+        
         private Vector3 oldPosition;
         public Vector3 startScale;
         private float lastSize;
-
+        private float sizeDiff;
+        
         private void Start()
         {
             Init();
@@ -91,7 +92,8 @@ namespace Entities.Player.PlayerInput
 
             var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
             if (diff > 0.0001) {
-                currentSize.Value -= diff;
+                sizeDiff += diff;
+                // currentSize.Value -= diff;
 
                 // var newScale = (maxSize * currentSize.Value) * startScale;
                 // if (newScale.x > 0.1f) {
@@ -110,6 +112,8 @@ namespace Entities.Player.PlayerInput
 
         private void SetScale()
         {
+            currentSize.Value -= sizeDiff;
+            sizeDiff = 0;
             var newScale = (startSize * currentSize.Value) * startScale;
             if (newScale.x > 0.1f) {
                 if (!isDummy) {
@@ -119,12 +123,14 @@ namespace Entities.Player.PlayerInput
                     transform.localScale = newScale;
                 }
             }
+
+            hitter.transform.localScale = newScale * 1.5f;
         }
 
         private void OnCollisionEnter(Collision other)
         {
             if (other.transform.CompareTag("Ground") || other.transform.CompareTag("Wall")) {
-                if (Mathf.Abs(CurrentSize - lastSize) > 0.1f) {
+                if (sizeDiff > 0.05f) {
                     SetMass();
                     SetScale();
                     lastSize = CurrentSize;
@@ -136,7 +142,10 @@ namespace Entities.Player.PlayerInput
         {
             oldPosition = oldPos;
             transform.position = currentPos;
-            MeltOverDistance();
+            var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
+            if (diff > 0.0001) {
+                CurrentSize -= diff;
+            }
         }
 
         private void OnDeath()

@@ -5,15 +5,19 @@ namespace DefaultNamespace
     public class SetParticleSystemPos : MonoBehaviour
     {
         public ParticleSystem wallSlideParticles;
+
         private void OnCollisionEnter(Collision other)
         {
             var contact = other.GetContact(0);
-            var dir = contact.point - transform.position;
-            var cross = Vector3.Cross(dir, contact.normal);
-            var newCross = new Vector3(cross.x, wallSlideParticles.transform.rotation.y, wallSlideParticles.transform.rotation.z);
-            var particleRot = Quaternion.LookRotation(newCross, Vector3.up);
-            var lccalContactPoint = transform.InverseTransformPoint(contact.point);
-            var tempContactPoint = new Vector3(wallSlideParticles.transform.localPosition.x, wallSlideParticles.transform.localPosition.y, lccalContactPoint.z);
+            var z = 0f;
+            if (contact.point.z > transform.position.z) {
+                z = transform.position.z + transform.localScale.z;
+            }
+            else {
+                z = transform.position.z - transform.localScale.z;
+            }
+
+            var tempContactPoint = new Vector3(transform.position.x, transform.position.y, z);
             wallSlideParticles.transform.localPosition = tempContactPoint;
         }
     }
