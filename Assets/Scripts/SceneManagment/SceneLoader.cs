@@ -33,13 +33,14 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
     
     public void LoadScene(int index, bool asyncLoad = true)
     {
+        
         if (asyncLoad) {
             SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
         }
         else {
             SceneManager.LoadScene(index, LoadSceneMode.Single);
         }
-        
+        GameManager.Instance.ToggleGravity();
         PlayerInputController.Instance.EnableControls();
     }
 

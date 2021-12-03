@@ -76,12 +76,23 @@ public class PlayerController : MonoBehaviour
         var crossY = cross.y;
         var crossZ = cross.z;
 
-        if (cross.y > 0) {
-            crossY = -cross.y;
-        }
+        if (!GameManager.Instance.reverseGravity) {
+            if (cross.y > 0) {
+                crossY = -cross.y;
+            }
 
-        if ((cross.z > 0 && cross.y > 0) || (cross.z < 0 && cross.y > 0)) {
-            crossZ = -cross.z;
+            if ((cross.z > 0 && cross.y > 0) || (cross.z < 0 && cross.y > 0)) {
+                crossZ = -cross.z;
+            }
+        }
+        else {
+            if (cross.y < 0) {
+                crossY = -cross.y;
+            }
+
+            if ((cross.z < 0 && cross.y < 0) || (cross.z > 0 && cross.y < 0)) {
+                crossZ = -cross.z;
+            }
         }
 
         var newCross = new Vector3(0, crossY, crossZ);
@@ -221,7 +232,6 @@ public class PlayerController : MonoBehaviour
         if (wallSlide != null) {
             StopCoroutine(wallSlide);
         }
-
         
         onWall = false;
         wallSlideParticles.Stop();
