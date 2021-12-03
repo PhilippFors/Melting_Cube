@@ -66,11 +66,6 @@ namespace Entities.Player.PlayerInput
                 else if (playerController.HasCollided) {
                     oldPosition = transform.position;
                 }
-
-                if (currentSize.Value <= 0f) {
-                    Debug.Log("GameOver lol");
-                    OnDeath();
-                }
             }
         }
 
@@ -126,6 +121,11 @@ namespace Entities.Player.PlayerInput
                     transform.localScale = newScale;
                 }
             }
+            
+            if (currentSize.Value <= 0f) {
+                Debug.Log("GameOver lol");
+                OnDeath();
+            }
         }
 
         private void OnCollisionEnter(Collision other)
@@ -150,8 +150,16 @@ namespace Entities.Player.PlayerInput
             }
         }
 
-        private void OnDeath()
+        public void OnDeath()
         {
+            StartCoroutine(DeathAnim());
+        }
+
+        private IEnumerator DeathAnim()
+        {
+            playerController.StopWallSlide(true);
+            rb.velocity = Vector3.zero;
+            yield return new WaitForSeconds(0.5f);
             SceneLoader.Instance.ReloadScene();
         }
     }

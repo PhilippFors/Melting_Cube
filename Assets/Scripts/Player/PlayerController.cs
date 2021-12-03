@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
         wallSlide = StartCoroutine(WallSlide());
     }
 
-    private void StopWallSlide(bool manualRelease = false)
+    public void StopWallSlide(bool manualRelease = false)
     {
         if (wallSlide != null) {
             StopCoroutine(wallSlide);
