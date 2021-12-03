@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     // [SerializeField] private Vector2 absoluteDelta;
     [SerializeField] private float force = 8;
     [SerializeField] private float maxDistance = 4;
-    [SerializeField] private bool hasCollided;
     [SerializeField] private LayerMask groundMask;
     [SerializeField, Header("Wallslide")] private float wallSlideTime;
     [SerializeField] private float wallSlideDelay = 0.5f;
@@ -28,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private float distance;
     private bool canThrow;
     private bool hitPlayer;
+    private bool hasCollided = true;
     private Plane plane;
     private Vector3 throwDirection;
     private Vector2 mousePos => PlayerInputController.Instance.MousePosition.ReadValue();
@@ -85,10 +85,7 @@ public class PlayerController : MonoBehaviour
         }
 
         var newCross = new Vector3(0, crossY, crossZ);
-
-        // Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f,
-        //     LayerMask.GetMask("Ground"));
-
+        
         if (Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f,
             groundMask) && hit.transform.CompareTag("Wall")) {
             transform.position += newCross * (Time.deltaTime * (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) * 2));
@@ -225,13 +222,14 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(wallSlide);
         }
 
-        StartCoroutine(WallSlideDelay());
+        
         onWall = false;
         wallSlideParticles.Stop();
         ResetRigidbody();
         if (!manualRelease) {
             rb.AddForce(-wallDir * wallSlidePushaway, ForceMode.Impulse);
         }
+        StartCoroutine(WallSlideDelay());
     }
 
     private void SetWallSlideRigidbody()
@@ -251,7 +249,6 @@ public class PlayerController : MonoBehaviour
         onWall = false;
         ResetRigidbody();
         wallSlideParticles.Stop();
-        rb.AddForce(-wallDir * wallSlidePushaway, ForceMode.Impulse);
         StartCoroutine(WallSlideDelay());
     }
 

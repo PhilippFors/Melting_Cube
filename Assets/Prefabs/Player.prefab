@@ -162,6 +162,7 @@ MonoBehaviour:
   isDummy: 0
   meltOverDistanceAmount: 0.15
   startSize: 0
+  setSizeOnImpact: 0
   minMass: 0.75
   maxMass: 1.6
   minSize: 0.01
@@ -194,8 +195,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wallSlideTime: 1.5
-  wallSlideDelay: 0.4
+  wallSlideDelay: 0.5
   wallSlideSpeed: 4
+  wallSlidePushaway: 5
   wallSlideParticles: {fileID: 3905121873513186329}
 --- !u!54 &2289752304218796814
 Rigidbody:

@@ -16,6 +16,7 @@ namespace Entities.Player.PlayerInput
         public float meltOverDistanceAmount = 0.2f;
         [HideInInspector] public float startSize;
 
+        [SerializeField] private bool setSizeOnImpact;
         [SerializeField] private float minMass = 0.5f;
         [SerializeField] private float maxMass = 1.5f;
         [SerializeField] private float minSize = 0.1f;
@@ -29,7 +30,6 @@ namespace Entities.Player.PlayerInput
 
         private Vector3 oldPosition;
         public Vector3 startScale;
-        private float lastSize;
         private float sizeDiff;
 
         private void Start()
@@ -40,7 +40,6 @@ namespace Entities.Player.PlayerInput
         public void Init()
         {
             CurrentSize = 1;
-            lastSize = CurrentSize;
             startSize = CurrentSize;
 
             if (!isDummy) {
@@ -92,14 +91,14 @@ namespace Entities.Player.PlayerInput
             var newPos = transform.position;
 
             var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
-            if (diff > 0.0001) {
-                sizeDiff += diff;
-                // currentSize.Value -= diff;
-
-                // var newScale = (maxSize * currentSize.Value) * startScale;
-                // if (newScale.x > 0.1f) {
-                //     SetScale();
-                // }
+            if (diff > 0.00001f) {
+                if (!setSizeOnImpact) {
+                    currentSize.Value -= diff;
+                    SetScale();
+                }
+                else {
+                    sizeDiff += diff;
+                }
             }
 
             oldPosition = newPos;
@@ -113,7 +112,10 @@ namespace Entities.Player.PlayerInput
 
         private void SetScale()
         {
-            currentSize.Value -= sizeDiff;
+            if (setSizeOnImpact) {
+                currentSize.Value -= sizeDiff;
+            }
+
             var newScale = (startSize * currentSize.Value) * startScale;
             if (newScale.x > 0.1f) {
                 if (!isDummy) {
@@ -130,7 +132,9 @@ namespace Entities.Player.PlayerInput
         {
             if (other.transform.CompareTag("Ground") || other.transform.CompareTag("Wall")) {
                 SetMass();
-                SetScale();
+                if (setSizeOnImpact) {
+                    SetScale();
+                }
                 transform.position += -other.contacts[0].normal * sizeDiff;
                 sizeDiff = 0;
             }
