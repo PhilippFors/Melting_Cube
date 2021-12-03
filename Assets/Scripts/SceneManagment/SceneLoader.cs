@@ -40,7 +40,11 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
         else {
             SceneManager.LoadScene(index, LoadSceneMode.Single);
         }
-        GameManager.Instance.ToggleGravity();
+
+        if (GameManager.Instance.reverseGravity) {
+            GameManager.Instance.ToggleGravity();
+        }
+
         PlayerInputController.Instance.EnableControls();
     }
 
