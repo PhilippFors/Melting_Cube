@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1930451302746792846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1930451302746792844}
+  - component: {fileID: 1930451302746792847}
+  m_Layer: 0
+  m_Name: PlayerInputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1930451302746792844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930451302746792846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.551605, y: 11.561493, z: 5.888772}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930451302746792847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930451302746792846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f4f7dfc65c4334d87a729ef8089232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
+  mousePositionAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Mouse Position
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: dbe39d35-4e50-42b3-8524-9ad19831f04b
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 7983659509382484512, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
+  mouseDeltaAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Mouse Delta
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 34b755d2-acf5-4e86-bec9-d4b1ebb61436
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: -1164989310613213162, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
+  leftMouseButtonAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Left Mouse Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: f97d414b-8a8b-4d0f-9e00-e5f31b4d95b9
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 3451125761540402623, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
+  rightMouseButtonAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Right Mouse Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: e8c82ebd-321f-4be7-8e40-6ffa63ac1bfb
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 6086124540840511803, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
+  pauseAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Pause
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 9a7692c7-1b09-4cdb-97a2-863fde64a6e1
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 5162386383651137556, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
+  quitAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Quit
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: b626138f-7406-4071-a623-a77c9f1d1423
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: -4453056579157834698, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}

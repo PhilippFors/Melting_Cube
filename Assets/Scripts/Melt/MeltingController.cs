@@ -26,12 +26,12 @@ namespace Entities.Player.PlayerInput
         [SerializeField] private FloatVariable currentSize;
         [SerializeField] private Rigidbody rb;
         [SerializeField] private GameObject hitter;
-        
+
         private Vector3 oldPosition;
         public Vector3 startScale;
         private float lastSize;
         private float sizeDiff;
-        
+
         private void Start()
         {
             Init();
@@ -77,15 +77,16 @@ namespace Entities.Player.PlayerInput
 
         private float Remap(float from1, float to1, float from2, float to2, float value) =>
             from2 + (value - from1) * (to2 - from2) / (to1 - from1);
-        
+
 
         private void SetMass()
         {
             if (rb) {
                 rb.mass = Remap(minSize, maxSize, minMass, maxMass, CurrentSize);
-                Debug.Log(rb.mass);
+                Debug.Log($"Mass: {rb.mass}");
             }
         }
+
         private void MeltOverDistance()
         {
             var newPos = transform.position;
@@ -113,13 +114,11 @@ namespace Entities.Player.PlayerInput
         private void SetScale()
         {
             currentSize.Value -= sizeDiff;
-            sizeDiff = 0;
             var newScale = (startSize * currentSize.Value) * startScale;
             if (newScale.x > 0.1f) {
                 if (!isDummy) {
                     visual.transform.localScale = newScale;
                     hitter.transform.localScale = newScale * 1.5f;
-
                 }
                 else {
                     transform.localScale = newScale;
@@ -130,11 +129,10 @@ namespace Entities.Player.PlayerInput
         private void OnCollisionEnter(Collision other)
         {
             if (other.transform.CompareTag("Ground") || other.transform.CompareTag("Wall")) {
-                if (sizeDiff > 0.05f) {
-                    SetMass();
-                    SetScale();
-                    lastSize = CurrentSize;
-                }
+                SetMass();
+                SetScale();
+                transform.position += -other.contacts[0].normal * sizeDiff;
+                sizeDiff = 0;
             }
         }
 

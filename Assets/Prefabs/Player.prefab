@@ -160,10 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDummy: 0
-  meltOverDistanceAmount: 0.2
+  meltOverDistanceAmount: 0.15
   startSize: 0
-  minMass: 0.8
-  maxMass: 1.7
+  minMass: 0.75
+  maxMass: 1.6
   minSize: 0.01
   maxSize: 2
   visual: {fileID: 1467835015010617043}
@@ -187,16 +187,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visual: {fileID: 1467835015010617043}
   useMouseDistance: 1
-  sensitivity: {x: 8, y: 12}
-  clamPoint: {x: -1.5, y: 1.5}
-  absoluteDelta: {x: 0, y: 0}
   force: 6
   maxDistance: 2.5
-  distance: 0
   hasCollided: 1
-  wallSlideTime: 2
-  wallSlideDelay: 0.5
-  wallSlideSpeed: 5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  wallSlideTime: 1.5
+  wallSlideDelay: 0.4
+  wallSlideSpeed: 4
   wallSlideParticles: {fileID: 3905121873513186329}
 --- !u!54 &2289752304218796814
 Rigidbody:
