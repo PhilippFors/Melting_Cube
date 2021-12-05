@@ -44,25 +44,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenes:
-  - _sceneName: Assets/Scenes/Playground.unity
+  - _sceneName: Assets/Scenes/Level_00.unity
     _sceneIndex: 0
     _isSceneEnabled: 1
-  - _sceneName: Assets/Scenes/Level_00.unity
+  - _sceneName: Assets/Scenes/Level_01.unity
     _sceneIndex: 1
     _isSceneEnabled: 1
-  - _sceneName: Assets/Scenes/Level_01.unity
+  - _sceneName: Assets/Scenes/Level_02.unity
     _sceneIndex: 2
     _isSceneEnabled: 1
-  - _sceneName: Assets/Scenes/Level_02.unity
+  - _sceneName: Assets/Scenes/Level_03.unity
     _sceneIndex: 3
     _isSceneEnabled: 1
-  - _sceneName: Assets/Scenes/Level_03.unity
+  - _sceneName: Assets/Scenes/Level_04.unity
     _sceneIndex: 4
     _isSceneEnabled: 1
-  - _sceneName: Assets/Scenes/Level_04.unity
-    _sceneIndex: 5
-    _isSceneEnabled: 1
-  activeScene:
-    _sceneName: 
-    _sceneIndex: -1
-    _isSceneEnabled: 0
