@@ -86,7 +86,7 @@ namespace Entities.Player.PlayerInput
             var newPos = transform.position;
 
             var diff = Vector3.Distance(oldPosition, transform.position) * meltOverDistanceAmount / 10;
-            if (diff > 0.00001f) {
+            if (diff > 0.000001f) {
                 if (!setSizeOnImpact) {
                     currentSize.Value -= diff;
                     SetScale();
@@ -113,11 +113,12 @@ namespace Entities.Player.PlayerInput
             }
 
             var newScale = (startSize * currentSize.Value) * startScale;
-            if (newScale.x > 0.1f) {
+            if (newScale.x > 0.15f) {
                 if (!isDummy) {
                     visual.transform.localScale = newScale;
-                    hitter.transform.localScale = newScale * 1.5f;
+                    hitter.transform.localScale = newScale * 2f;
                     col.size = newScale;
+                    playerController.meltParticles.transform.localScale = newScale;
                 }
                 else {
                     transform.localScale = newScale;

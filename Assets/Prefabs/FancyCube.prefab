@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 349810568557801257}
   - component: {fileID: 2539521744083901411}
   - component: {fileID: 7918809944594279741}
+  - component: {fileID: 8148168890978034764}
   m_Layer: 6
   m_Name: FancyCube
   m_TagString: Ground
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 831a54a8b7ed0cd408c0ba1287083b7c, type: 2}
-  - {fileID: 2100000, guid: 7fbb1e47823ac624f83d4f8f3606ee39, type: 2}
+  - {fileID: 2100000, guid: 23484be0390d525429de3a378c2befdd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,3 +97,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: -0.5, y: 0.5, z: 0.5}
+--- !u!114 &8148168890978034764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052903085380467254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a955f8dff7469ba6f67fc3563ba1d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnOnTime: 0.2
+  turnOffTime: 0.8
+  normalColor: {r: 1, g: 0.16202943, b: 0, a: 1}
+  lightColor: {r: 16, g: 2.572549, b: 0, a: 1}

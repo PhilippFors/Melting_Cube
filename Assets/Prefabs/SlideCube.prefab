@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 4653476845891375684}
   - component: {fileID: 7453615440976979598}
   - component: {fileID: 3002772727084060752}
+  - component: {fileID: 176734032349260387}
   m_Layer: 6
   m_Name: SlideCube
   m_TagString: Wall
@@ -445,7 +446,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 831a54a8b7ed0cd408c0ba1287083b7c, type: 2}
-  - {fileID: 2100000, guid: c98f1d75e05c6a94fb98f02fe75ae051, type: 2}
+  - {fileID: 2100000, guid: 1d787641e73d8cc499a1265e618dd014, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -475,8 +476,24 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8966794060486608731}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: -0.5, y: 0.5, z: 0.5}
+  m_Size: {x: 1, y: 0.94630456, z: 1.1994424}
+  m_Center: {x: -0.5, y: 0.49808228, z: 0.49999928}
+--- !u!114 &176734032349260387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966794060486608731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec2af6580eb4458aae24d2875176cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnOnTime: 0.2
+  turnOffTime: 0.8
+  normalColor: {r: 0, g: 1, b: 0.09084173, a: 0}
+  lightColor: {r: 0, g: 12.125731, b: 1.0936935, a: 1}

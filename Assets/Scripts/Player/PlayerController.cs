@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
+using DG.Tweening;
 using Entities.Player.PlayerInput;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public ParticleSystem meltParticles;
     public bool HasCollided => hasCollided;
+    public bool OnWall => onWall;
 
     [SerializeField] private GameObject visual;
     [SerializeField] private float force = 8;
@@ -25,12 +29,12 @@ public class PlayerController : MonoBehaviour
     private bool hasCollided = true;
     private Plane plane;
     private Vector3 throwDirection;
-    
+
     // input
     private Vector2 mousePos => PlayerInputController.Instance.MousePosition.ReadValue();
     private bool lmbPressed => PlayerInputController.Instance.LeftMouseButton.IsPressed;
     private bool rmbPressed => PlayerInputController.Instance.RightMouseButton.IsPressed;
-    
+
     // Wallslide
     private bool canWallSlide;
     private bool onWall;
@@ -38,7 +42,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 wallDir;
     private Vector3 cross;
     private Coroutine wallSlide;
-
+    private bool grounded;
+    
     private void Awake()
     {
         cam = Camera.main;
@@ -48,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (GroundCheck() || onWall) {
+        if (grounded || onWall) {
             DistanceBased();
         }
         else {
@@ -60,7 +65,23 @@ public class PlayerController : MonoBehaviour
         if (onWall) {
             WallSlideMovement();
         }
+
+        meltParticles.transform.rotation = Quaternion.Euler(0, 90, 0);
     }
+
+    private void FixedUpdate()
+    {
+        if (hasCollided) {
+            meltParticles.Stop();
+        }
+        else if (rb.velocity.magnitude > 0.001f) {
+            meltParticles.Play();
+        }
+        else {
+            meltParticles.Stop();
+        }
+    }
+
 
     private void WallSlideMovement()
     {
@@ -103,17 +124,6 @@ public class PlayerController : MonoBehaviour
             groundMask)) {
             StopWallSlide();
         }
-    }
-
-    private bool GroundCheck()
-    {
-        var pos = transform.position;
-        var length = visual.transform.localScale.x / 2 + 0.01f;
-        return Physics.Raycast(pos, Vector3.down, length, groundMask) ||
-               Physics.Raycast(pos + new Vector3(0, 0, visual.transform.localScale.z - 0.05f), Vector3.down, length,
-                   groundMask) ||
-               Physics.Raycast(pos - new Vector3(0, 0, visual.transform.localScale.z + 0.05f), Vector3.down, length,
-                   groundMask);
     }
 
     private void DistanceBased() // based and asianwifepilled
@@ -164,7 +174,9 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(throwDirection * (distance * force), ForceMode.Impulse);
 
         hasCollided = false;
+        grounded = false;
         NewTrajectoryPredictor.Instance.DisableTrajectory();
+        meltParticles.Play();
     }
 
     private void StartWallSlide(ContactPoint contact)
@@ -225,6 +237,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        var dot = Vector3.Dot(other.contacts[0].normal, Vector3.up);
+        if (dot > 0.95) {
+            grounded = true;
+        }
         if (other.gameObject.GetComponent<MeltStopper>()) {
             hasCollided = true;
         }
