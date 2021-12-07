@@ -12,6 +12,8 @@ namespace Entities.Player.PlayerInput
             set => currentSize.Value = value;
         }
 
+        public float HitterScale => hitter.transform.localScale.x;
+        
         public bool isDummy;
         public float meltOverDistanceAmount = 0.2f;
         [HideInInspector] public float startSize;
@@ -32,7 +34,7 @@ namespace Entities.Player.PlayerInput
         public Vector3 startScale;
         private float sizeDiff;
         private bool dead;
-        private void Start()
+        private void Awake()
         {
             Init();
         }
@@ -52,6 +54,7 @@ namespace Entities.Player.PlayerInput
             oldPosition = transform.position;
 
             SetMass();
+            SetScale();
         }
 
         private void Update()
@@ -116,7 +119,13 @@ namespace Entities.Player.PlayerInput
             if (newScale.x > 0.15f) {
                 if (!isDummy) {
                     visual.transform.localScale = newScale;
-                    hitter.transform.localScale = newScale * 2f;
+                    if (currentSize.Value < 0.4f) {
+                        hitter.transform.localScale = newScale * 3f;
+                    }
+                    else {
+                        hitter.transform.localScale = newScale * 1.5f;
+                    }
+
                     col.size = newScale;
                     playerController.meltParticles.transform.localScale = newScale;
                 }

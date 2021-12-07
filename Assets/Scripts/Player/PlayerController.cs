@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using DG.Tweening;
 using Entities.Player.PlayerInput;
 using UnityEngine;
 
@@ -9,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem meltParticles;
     public bool HasCollided => hasCollided;
     public bool OnWall => onWall;
+    public float MaxDistance => maxDistance;
+    public Vector3 visualScale => visual.transform.localScale;
 
     [SerializeField] private GameObject visual;
     [SerializeField] private float force = 8;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallSlideSpeed = 5f;
     [SerializeField] private float wallSlidePushaway = 5f;
     [SerializeField] private ParticleSystem wallSlideParticles;
+    [SerializeField] private TargetRingController targetRingController;
 
     private Rigidbody rb;
     private Camera cam;
@@ -43,7 +45,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 cross;
     private Coroutine wallSlide;
     private bool grounded;
-    
+
     private void Awake()
     {
         cam = Camera.main;
@@ -51,8 +53,17 @@ public class PlayerController : MonoBehaviour
         meltingController = GetComponent<MeltingController>();
     }
 
+    private void Start()
+    {
+        targetRingController.ExpandCircle(false, maxDistance, meltingController.HitterScale);
+    }
+
     private void Update()
     {
+        if (!Physics.Raycast(transform.position, Vector3.down, 2f, groundMask)) {
+            grounded = false;
+        }
+
         if (grounded || onWall) {
             DistanceBased();
         }
@@ -60,6 +71,8 @@ public class PlayerController : MonoBehaviour
             canThrow = false;
             hitPlayer = false;
             NewTrajectoryPredictor.Instance.DisableTrajectory();
+            targetRingController.ExpandCircle(false, maxDistance, meltingController.HitterScale);
+            targetRingController.SetTransparency(true);
         }
 
         if (onWall) {
@@ -120,20 +133,24 @@ public class PlayerController : MonoBehaviour
             StopWallSlide();
         }
 
-        if (Physics.Raycast(transform.position, newCross, visual.transform.localScale.x + 0.1f,
-            groundMask)) {
+        if (Physics.Raycast(transform.position, newCross, visual.transform.localScale.x + 0.1f, groundMask)) {
             StopWallSlide();
         }
     }
 
-    private void DistanceBased() // based and asianwifepilled
+    private void DistanceBased()
     {
         var ray = cam.ScreenPointToRay(mousePos);
+        if (Physics.Raycast(ray, out var h, Mathf.Infinity, LayerMask.GetMask("Hitter"))) {
+            targetRingController.SetTransparency(false);
+        }
 
         if (rmbPressed) {
             canThrow = false;
             hitPlayer = false;
             NewTrajectoryPredictor.Instance.DisableTrajectory();
+            targetRingController.ExpandCircle(false, maxDistance, meltingController.HitterScale);
+            targetRingController.SetTransparency(true);
             return;
         }
 
@@ -147,7 +164,9 @@ public class PlayerController : MonoBehaviour
             }
         }
         else {
+            targetRingController.SetTransparency(true);
             canThrow = false;
+            targetRingController.ExpandCircle(false, maxDistance, meltingController.HitterScale);
             if (hitPlayer) {
                 Release();
                 hitPlayer = false;
@@ -155,6 +174,8 @@ public class PlayerController : MonoBehaviour
         }
 
         if (canThrow) {
+            targetRingController.ExpandCircle(true, maxDistance, meltingController.HitterScale);
+            targetRingController.SetTransparency(false);
             plane = new Plane(Vector3.right, transform.position);
             plane.Raycast(ray, out var d);
             var point = ray.GetPoint(d);
@@ -241,6 +262,7 @@ public class PlayerController : MonoBehaviour
         if (dot > 0.95) {
             grounded = true;
         }
+
         if (other.gameObject.GetComponent<MeltStopper>()) {
             hasCollided = true;
         }
