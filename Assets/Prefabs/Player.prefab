@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7059410394812669541}
   - component: {fileID: 7557027575686055772}
   - component: {fileID: 3441572643284451070}
-  - component: {fileID: 2325888366301689814}
   - component: {fileID: 6652534983390182689}
   m_Layer: 0
   m_Name: Visual
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2325888366301689814
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1467835015010617043}
-  m_Material: {fileID: 13400000, guid: 3a51e7e5c5000ee438fcf9d4fde6fb90, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6652534983390182689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +108,7 @@ GameObject:
   - component: {fileID: 2289752304218796808}
   - component: {fileID: 2289752304218796815}
   - component: {fileID: 2289752304218796814}
+  - component: {fileID: 4949774723397497882}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -163,9 +150,10 @@ MonoBehaviour:
   isDummy: 0
   meltOverDistanceAmount: 0.15
   startSize: 0
+  col: {fileID: 4949774723397497882}
   setSizeOnImpact: 0
-  minMass: 1
-  maxMass: 1.6
+  minMass: 0.9
+  maxMass: 1.5
   minSize: 0.01
   maxSize: 2
   visual: {fileID: 1467835015010617043}
@@ -189,8 +177,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visual: {fileID: 1467835015010617043}
   useMouseDistance: 1
-  force: 6
-  maxDistance: 2.5
+  force: 5
+  maxDistance: 3
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -212,9 +200,22 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 98
   m_CollisionDetection: 0
+--- !u!65 &4949774723397497882
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2289752304218796816}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3451850904435990305
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,8 +644,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.4
+      scalar: 0.3
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4169,9 +4170,9 @@ ParticleSystem:
       properties: 0
       emitProbability: 1
   LightsModule:
-    enabled: 0
-    ratio: 0
-    light: {fileID: 0}
+    enabled: 1
+    ratio: 1
+    light: {fileID: 9066367364440998331, guid: a88a3a887de172b44a0bc7be2cee4dbd, type: 3}
     randomDistribution: 1
     color: 1
     range: 1
@@ -4179,7 +4180,7 @@ ParticleSystem:
     rangeCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 6.43
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4232,7 +4233,7 @@ ParticleSystem:
     intensityCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4286,11 +4287,11 @@ ParticleSystem:
   TrailModule:
     enabled: 0
     mode: 0
-    ratio: 1
+    ratio: 0.14
     lifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.37
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5117,7 +5118,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
+  - {fileID: 2100000, guid: c01183c5febf860429be55963ca0d378, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

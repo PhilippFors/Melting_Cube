@@ -1,17 +1,12 @@
 using System.Collections;
 using Entities.Player.PlayerInput;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
     public bool HasCollided => hasCollided;
 
     [SerializeField] private GameObject visual;
-    [SerializeField] private bool useMouseDistance;
-    // [SerializeField] private Vector2 sensitivity = new Vector2(2, 4);
-    // [SerializeField] private Vector2 clampPoint = new Vector2(-1, 1);
-    // [SerializeField] private Vector2 absoluteDelta;
     [SerializeField] private float force = 8;
     [SerializeField] private float maxDistance = 4;
     [SerializeField] private LayerMask groundMask;
@@ -30,8 +25,9 @@ public class PlayerController : MonoBehaviour
     private bool hasCollided = true;
     private Plane plane;
     private Vector3 throwDirection;
+    
+    // input
     private Vector2 mousePos => PlayerInputController.Instance.MousePosition.ReadValue();
-    // private Vector2 currentDelta => PlayerInputController.Instance.MouseDelta.ReadValue();
     private bool lmbPressed => PlayerInputController.Instance.LeftMouseButton.IsPressed;
     private bool rmbPressed => PlayerInputController.Instance.RightMouseButton.IsPressed;
     
@@ -53,12 +49,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (GroundCheck() || onWall) {
-            if (useMouseDistance) {
-                DistanceBased();
-            }
-            else {
-                DeltaBased();
-            }
+            DistanceBased();
         }
         else {
             canThrow = false;
@@ -96,10 +87,13 @@ public class PlayerController : MonoBehaviour
         }
 
         var newCross = new Vector3(0, crossY, crossZ);
-        
+
         if (Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f,
-            groundMask) && hit.transform.CompareTag("Wall")) {
-            transform.position += newCross * (Time.deltaTime * (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) * 2));
+                groundMask) &&
+            hit.transform.CompareTag("Wall")) {
+            transform.position += newCross * (Time.deltaTime *
+                                              (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) *
+                                                  2));
         }
         else {
             StopWallSlide();
@@ -113,8 +107,13 @@ public class PlayerController : MonoBehaviour
 
     private bool GroundCheck()
     {
-        return Physics.CheckBox(transform.position, visual.transform.localScale / 2 + new Vector3(0.05f, 0.05f, 0.05f),
-            transform.rotation, groundMask);
+        var pos = transform.position;
+        var length = visual.transform.localScale.x / 2 + 0.01f;
+        return Physics.Raycast(pos, Vector3.down, length, groundMask) ||
+               Physics.Raycast(pos + new Vector3(0, 0, visual.transform.localScale.z - 0.05f), Vector3.down, length,
+                   groundMask) ||
+               Physics.Raycast(pos - new Vector3(0, 0, visual.transform.localScale.z + 0.05f), Vector3.down, length,
+                   groundMask);
     }
 
     private void DistanceBased() // based and asianwifepilled
@@ -140,13 +139,13 @@ public class PlayerController : MonoBehaviour
         else {
             canThrow = false;
             if (hitPlayer) {
-                Release(true);
+                Release();
                 hitPlayer = false;
             }
         }
 
         if (canThrow) {
-            plane = new Plane(Vector3.right, Vector3.zero);
+            plane = new Plane(Vector3.right, transform.position);
             plane.Raycast(ray, out var d);
             var point = ray.GetPoint(d);
             throwDirection = (transform.position - point).normalized;
@@ -158,56 +157,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void DeltaBased() // based? based on what
-    {
-        // var ray = cam.ScreenPointToRay(mousePos);
-        //
-        // if (rmbPressed) {
-        //     canThrow = false;
-        //     hitPlayer = false;
-        //     absoluteDelta = Vector2.zero;
-        //     return;
-        // }
-        //
-        // if (lmbPressed) {
-        //     if (Physics.Raycast(ray, out var hit, Mathf.Infinity)) {
-        //         var player = hit.transform.GetComponentInParent<PlayerController>();
-        //         if (player) {
-        //             canThrow = true;
-        //             hitPlayer = true;
-        //         }
-        //     }
-        // }
-        // else {
-        //     canThrow = false;
-        //     if (hitPlayer) {
-        //         Release(false);
-        //         hitPlayer = false;
-        //     }
-        // }
-        //
-        // if (canThrow) {
-        //     absoluteDelta += (currentDelta / Screen.width) * sensitivity;
-        //     absoluteDelta = new Vector2(
-        //         Mathf.Clamp(absoluteDelta.x, clampPoint.x, clampPoint.y),
-        //         Mathf.Clamp(absoluteDelta.y, clampPoint.x, clampPoint.y)
-        //     );
-        // }
-        // else {
-        //     absoluteDelta = Vector2.zero;
-        // }
-    }
-
-    private void Release(bool usemoused)
+    private void Release()
     {
         StopWallSlide(true);
 
-        if (usemoused) {
-            rb.AddForce(throwDirection * (distance * force), ForceMode.Impulse);
-        }
-        else {
-            // rb.AddForce(new Vector3(0, absoluteDelta.y * -1, absoluteDelta.x * -1) * force, ForceMode.Impulse);
-        }
+        rb.AddForce(throwDirection * (distance * force), ForceMode.Impulse);
 
         hasCollided = false;
         NewTrajectoryPredictor.Instance.DisableTrajectory();
@@ -232,13 +186,14 @@ public class PlayerController : MonoBehaviour
         if (wallSlide != null) {
             StopCoroutine(wallSlide);
         }
-        
+
         onWall = false;
         wallSlideParticles.Stop();
         ResetRigidbody();
         if (!manualRelease) {
             rb.AddForce(-wallDir * wallSlidePushaway, ForceMode.Impulse);
         }
+
         StartCoroutine(WallSlideDelay());
     }
 

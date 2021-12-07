@@ -15,7 +15,7 @@ namespace Entities.Player.PlayerInput
         public bool isDummy;
         public float meltOverDistanceAmount = 0.2f;
         [HideInInspector] public float startSize;
-
+        [SerializeField] private BoxCollider col;
         [SerializeField] private bool setSizeOnImpact;
         [SerializeField] private float minMass = 0.5f;
         [SerializeField] private float maxMass = 1.5f;
@@ -31,7 +31,7 @@ namespace Entities.Player.PlayerInput
         private Vector3 oldPosition;
         public Vector3 startScale;
         private float sizeDiff;
-
+        private bool dead;
         private void Start()
         {
             Init();
@@ -102,6 +102,7 @@ namespace Entities.Player.PlayerInput
         public void AddSize(float value)
         {
             currentSize.Value += value;
+            currentSize.Value = Mathf.Clamp(CurrentSize, 0, maxSize);
             SetScale();
         }
 
@@ -116,13 +117,15 @@ namespace Entities.Player.PlayerInput
                 if (!isDummy) {
                     visual.transform.localScale = newScale;
                     hitter.transform.localScale = newScale * 1.5f;
+                    col.size = newScale;
                 }
                 else {
                     transform.localScale = newScale;
                 }
             }
             
-            if (currentSize.Value <= 0f) {
+            if (currentSize.Value <= 0f && !dead) {
+                dead = true;
                 Debug.Log("GameOver lol");
                 OnDeath();
             }
