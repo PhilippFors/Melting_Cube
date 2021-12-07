@@ -59,3 +59,10 @@ MonoBehaviour:
   - _sceneName: Assets/Scenes/Level_04.unity
     _sceneIndex: 4
     _isSceneEnabled: 1
+  - _sceneName: Assets/Scenes/Level_05.unity
+    _sceneIndex: 5
+    _isSceneEnabled: 1
+  - _sceneName: Assets/Scenes/Level_06.unity
+    _sceneIndex: 6
+    _isSceneEnabled: 1
+  activeScene: 0

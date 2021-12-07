@@ -148,12 +148,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDummy: 0
-  meltOverDistanceAmount: 0.15
+  meltOverDistanceAmount: 0.2
   startSize: 0
   col: {fileID: 4949774723397497882}
   setSizeOnImpact: 0
   minMass: 0.9
-  maxMass: 1.5
+  maxMass: 2
   minSize: 0.01
   maxSize: 2
   visual: {fileID: 1467835015010617043}
@@ -176,7 +176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visual: {fileID: 1467835015010617043}
-  useMouseDistance: 1
   force: 5
   maxDistance: 3
   groundMask:
