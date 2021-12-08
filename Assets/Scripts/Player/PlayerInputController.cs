@@ -16,17 +16,13 @@ namespace Entities.Player.PlayerInput
         public InputActionData<Vector2> MousePosition =>
             mousePosition ?? (mousePosition = new InputActionData<Vector2>(mousePositionAction));
 
-        public InputActionData<Vector2> MouseDelta =>
-            mouseDelta ?? (mouseDelta = new InputActionData<Vector2>(mouseDeltaAction));
+        public InputActionData<Vector2> MouseDelta => mouseDelta ?? (mouseDelta = new InputActionData<Vector2>(mouseDeltaAction));
 
-        public InputActionData<float> LeftMouseButton =>
-            leftMouseButton ?? (leftMouseButton = new InputActionData<float>(leftMouseButtonAction));
+        public InputActionData<float> LeftMouseButton => leftMouseButton ?? (leftMouseButton = new InputActionData<float>(leftMouseButtonAction));
 
-        public InputActionData<float> RightMouseButton => rightMouseButton ??
-                                                          (rightMouseButton =
-                                                              new InputActionData<float>(rightMouseButtonAction));
+        public InputActionData<float> RightMouseButton => rightMouseButton ?? (rightMouseButton = new InputActionData<float>(rightMouseButtonAction));
 
-        public InputActionData<float> Pause => pause ?? (pause = new InputActionData<float>(pauseAction));
+        public InputActionData<float> RestartLevel => restartLevel ?? (restartLevel = new InputActionData<float>(restartLevelAction));
         public InputActionData<float> Quit => quit ?? (quit = new InputActionData<float>(quitAction));
 
         [SerializeField] private InputActionAsset inputActions;
@@ -35,14 +31,14 @@ namespace Entities.Player.PlayerInput
         [SerializeField] private InputActionProperty mouseDeltaAction;
         [SerializeField] private InputActionProperty leftMouseButtonAction;
         [SerializeField] private InputActionProperty rightMouseButtonAction;
-        [SerializeField] private InputActionProperty pauseAction;
+        [SerializeField] private InputActionProperty restartLevelAction;
         [SerializeField] private InputActionProperty quitAction;
 
         private InputActionData<Vector2> mousePosition;
         private InputActionData<Vector2> mouseDelta;
         private InputActionData<float> leftMouseButton;
         private InputActionData<float> rightMouseButton;
-        private InputActionData<float> pause;
+        private InputActionData<float> restartLevel;
         private InputActionData<float> quit;
 
         public override void Awake()

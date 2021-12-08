@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "RestartLevel",
+                    "type": "Button",
+                    "id": "333363ba-cf3b-4a01-8552-428b9efc69cf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -113,11 +121,22 @@
                 {
                     "name": "",
                     "id": "3aeb62d1-3b68-4831-9a98-701824293570",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5fe75e6f-d0a1-4b09-8c69-25136dd77b39",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RestartLevel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

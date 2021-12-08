@@ -8,14 +8,17 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
     public SceneInfo mainMenu;
     public SceneInfo[] scenes;
     private int activeScene;
+    private int activeLevel;
 
     private void Start()
     {
+        PlayerInputController.Instance.RestartLevel.Performed += ctx => ReloadScene();
         DontDestroyOnLoad(gameObject);
         var a = SceneManager.GetActiveScene();
-        foreach (var s in scenes) {
-            if (a.buildIndex == s.SceneIndex) {
-                activeScene = s.SceneIndex;
+        for (int i = 0; i < scenes.Length; i++) {
+            if (a.buildIndex == scenes[i].SceneIndex) {
+                activeScene = scenes[i].SceneIndex;
+                activeLevel = i;
             }
         }
     }
@@ -23,13 +26,14 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
     public void StartGame()
     {
         LoadScene(scenes[0]);
+        activeLevel = 0;
     }
 
     public void ReturnToMenu()
     {
         LoadScene(mainMenu);
     }
-    
+
     public void ReloadScene()
     {
         LoadScene(activeScene);
@@ -59,13 +63,13 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
 
     public void LoadNextLevel()
     {
-        activeScene++;
-        if (activeScene >= scenes.Length) {
-            activeScene = 0;
+        activeLevel++;
+        if (activeLevel >= scenes.Length) {
+            activeLevel = 0;
             ReturnToMenu();
         }
         else {
-            LoadScene(scenes[activeScene]);
+            LoadScene(scenes[activeLevel]);
         }
     }
 }

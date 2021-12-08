@@ -88,17 +88,17 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
     m_Reference: {fileID: 6086124540840511803, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
-  pauseAction:
+  restartLevelAction:
     m_UseReference: 1
     m_Action:
-      m_Name: Pause
+      m_Name: Restart Level
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 9a7692c7-1b09-4cdb-97a2-863fde64a6e1
+      m_Id: 0dbdad71-1eeb-483f-b650-15f1cd7c5c8e
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 5162386383651137556, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
+    m_Reference: {fileID: -7584663064073162535, guid: c8580a4ad5e6ace4f9b12ca20b417ee8, type: 3}
   quitAction:
     m_UseReference: 1
     m_Action:
