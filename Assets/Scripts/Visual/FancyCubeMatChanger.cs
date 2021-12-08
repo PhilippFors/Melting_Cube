@@ -21,7 +21,7 @@ public class FancyCubeMatChanger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<PlayerController>()) {
+        if (other.GetComponentInParent<PlayerController>()) {
             var sequence = DOTween.Sequence().Append(
                 mat.DOVector(lightColor, "_EmissionColor", turnOnTime)
             ).Append(

@@ -169,7 +169,7 @@ Camera:
   far clip plane: 1000
   field of view: 70
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -244,4 +244,3 @@ MonoBehaviour:
   yOffset: 0
   edgePadding: 30
   speed: 6
-  overlayCam: {fileID: 7614178699324096842}
