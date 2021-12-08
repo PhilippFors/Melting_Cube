@@ -495,5 +495,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnOnTime: 0.2
   turnOffTime: 0.8
-  normalColor: {r: 0, g: 1, b: 0.09084173, a: 1}
-  lightColor: {r: 0, g: 11.984314, b: 1.1294118, a: 1}
+  normalColor: {r: 0, g: 1, b: 0.89626956, a: 1}
+  lightColor: {r: 0, g: 2.9960785, b: 2.6980393, a: 1}

@@ -1139,7 +1139,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722562389}
-  m_Text: Small size = high jump
+  m_Text: small size = high jump
   m_OffsetZ: 0
   m_CharacterSize: 0.43
   m_LineSpacing: 1
@@ -1382,8 +1382,8 @@ Transform:
   - {fileID: 452835742}
   - {fileID: 1033164685}
   - {fileID: 1921179579}
-  - {fileID: 1810421904}
   - {fileID: 1269105096}
+  - {fileID: 1810421904}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
