@@ -121,17 +121,14 @@ public class PlayerController : MonoBehaviour
 
         var newCross = new Vector3(0, crossY, crossZ);
 
-        if (Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f,
-                groundMask) &&
-            hit.transform.CompareTag("Wall")) {
-            transform.position += newCross * (Time.deltaTime * (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) *
-                                                  2));
+        if (Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f, groundMask, QueryTriggerInteraction.Ignore) && hit.transform.CompareTag("Wall")) {
+            transform.position += newCross * (Time.deltaTime * (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) * 2));
         }
         else {
             StopWallSlide();
         }
 
-        if (Physics.Raycast(transform.position, newCross, visual.transform.localScale.x + 0.1f, groundMask)) {
+        if (Physics.Raycast(transform.position, newCross, visual.transform.localScale.x + 0.1f, groundMask, QueryTriggerInteraction.Ignore)) {
             StopWallSlide();
         }
     }
@@ -200,7 +197,7 @@ public class PlayerController : MonoBehaviour
         meltParticles.Play();
     }
 
-    private void StartWallSlide(ContactPoint contact)
+    private void StartWallSlide()
     {
         wallDir = contact.point - transform.position;
         cross = Vector3.Cross(wallDir, contact.normal);
@@ -232,12 +229,14 @@ public class PlayerController : MonoBehaviour
 
     private void SetWallSlideRigidbody()
     {
+        rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
     }
 
     private void ResetRigidbody()
     {
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         rb.isKinematic = false;
     }
 
@@ -258,7 +257,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        var dot = Vector3.Dot(other.contacts[0].normal, Vector3.up);
+        var c = other.contacts[0];
+        var dot = Vector3.Dot(c.normal, Vector3.up);
         if (dot > 0.6f) {
             grounded = true;
         }
@@ -270,7 +270,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Wall") && canWallSlide) {
             var c = other.GetContact(0);
             contact = c;
-            StartWallSlide(c);
+            StartWallSlide();
 
             var tempContactPoint = new Vector3(visual.transform.localPosition.x, visual.transform.localPosition.y,
                 transform.InverseTransformPoint(contact.point).z);

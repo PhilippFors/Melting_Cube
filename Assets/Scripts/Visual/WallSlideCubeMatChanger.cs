@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using Entities.Player.PlayerInput;
 using UnityEngine;
 
 namespace DefaultNamespace.Visual
@@ -19,7 +18,7 @@ namespace DefaultNamespace.Visual
 
         private void Awake()
         {
-            mat = GetComponent<MeshRenderer>().materials[1];
+            mat = GetComponentInParent<MeshRenderer>().materials[1];
         }
 
         private void OnTriggerStay(Collider other)

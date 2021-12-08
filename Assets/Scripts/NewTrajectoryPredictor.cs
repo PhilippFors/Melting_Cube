@@ -18,6 +18,7 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
     private GameObject dummy;
     private bool isInstantiated;
 
+    private Vector3[] oldpos;
     // Called in Player Controller
     public void Simulate(GameObject player, Vector3 initVel, Vector3 force)
     {
@@ -75,7 +76,7 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
         var pos = new List<Vector3>();
         float size = 0;
         for (int i = 0; i < tempPos.Count; i++) {
-            if (!Physics.CheckBox(tempPos[i], tempScales[i] / 2, Quaternion.identity, LayerMask.GetMask("Ground"))) {
+            if (!Physics.CheckBox(tempPos[i], tempScales[i] / 2 - new Vector3(0.01f, 0.01f, 0.01f), Quaternion.identity, LayerMask.GetMask("Ground"))) {
                 pos.Add(tempPos[i]);
                 size = tempSizes[i];
             }

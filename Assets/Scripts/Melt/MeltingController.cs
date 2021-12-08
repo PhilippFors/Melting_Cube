@@ -28,13 +28,16 @@ namespace Entities.Player.PlayerInput
         [SerializeField] private FloatVariable currentSize;
         [SerializeField] private Rigidbody rb;
         [SerializeField] private GameObject hitter;
+        [SerializeField] private ParticleSystem deathParticles;
 
+        private BoxCollider col;
         private Vector3 oldPosition;
         public Vector3 startScale;
         private float sizeDiff;
         private bool dead;
         private void Awake()
         {
+            col = GetComponent<BoxCollider>();
             Init();
         }
 
@@ -126,6 +129,7 @@ namespace Entities.Player.PlayerInput
                     }
 
                     playerController.meltParticles.transform.localScale = newScale;
+                    col.size = newScale;
                 }
                 else {
                     transform.localScale = newScale;
@@ -133,8 +137,6 @@ namespace Entities.Player.PlayerInput
             }
             
             if (currentSize.Value <= 0f && !dead) {
-                dead = true;
-                Debug.Log("GameOver lol");
                 OnDeath();
             }
         }
@@ -163,14 +165,18 @@ namespace Entities.Player.PlayerInput
 
         public void OnDeath()
         {
-            StartCoroutine(DeathAnim());
+            if (!dead) {
+                dead = true;
+                StartCoroutine(DeathAnim());
+            }
         }
 
         private IEnumerator DeathAnim()
         {
             playerController.StopWallSlide(true);
             rb.velocity = Vector3.zero;
-            yield return new WaitForSeconds(0.5f);
+            deathParticles.Play();
+            yield return new WaitForSeconds(1f);
             SceneLoader.Instance.ReloadScene();
         }
     }
