@@ -5505,7 +5505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: a4ccdf20f45104d4a9e96be75b69e44f, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.19215687}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.38431373}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5535,7 +5535,7 @@ MonoBehaviour:
   thinnerRing: {fileID: 2800000, guid: 5ca24b0db5d678941a52dede983a9224, type: 3}
   fadeDuration: 0.2
   expandDuration: 0.2
-  transparentColor: {r: 0.15268604, g: 0, b: 0.04707317, a: 0.21176471}
+  transparentColor: {r: 0.61960787, g: 0.007843138, b: 0.19607843, a: 0.39215687}
   fullColor: {r: 3.9686275, g: 0, b: 1.2235295, a: 0.6313726}
 --- !u!1 &5349526468214972188
 GameObject:
