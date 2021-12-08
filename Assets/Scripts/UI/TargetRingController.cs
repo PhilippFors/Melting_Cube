@@ -36,7 +36,7 @@ public class TargetRingController : MonoBehaviour
     public void ExpandCircle(bool expand, float maxDist = 0, float scale = 0)
     {
         if (expand) {
-            transform.DOScale(new Vector3(maxDist, maxDist, maxDist) * 2 * 1.05f, expandDuration);
+            transform.DOScale(new Vector3(maxDist, maxDist, maxDist) * 2, expandDuration);
             image.texture = thinnerRing;
         }
         else {

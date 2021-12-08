@@ -14,10 +14,15 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void Start()
     {
-        PlayerInputController.Instance.Quit.Performed += ctx => CloseGame();
+        PlayerInputController.Instance.Quit.Performed += ctx => ReturnToMenu();
+    }
+
+    private void ReturnToMenu()
+    {
+        SceneLoader.Instance.ReturnToMenu();
     }
     
-   private void CloseGame()
+   public void CloseGame()
     {
         Application.Quit();
     }

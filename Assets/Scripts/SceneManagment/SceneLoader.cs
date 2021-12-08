@@ -5,9 +5,9 @@ using UsefulCode.Utilities;
 
 public class SceneLoader : SingletonBehaviour<SceneLoader>
 {
+    public SceneInfo mainMenu;
     public SceneInfo[] scenes;
-    public int activeScene;
-    private int activeLevel;
+    private int activeScene;
 
     private void Start()
     {
@@ -20,6 +20,16 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
         }
     }
 
+    public void StartGame()
+    {
+        LoadScene(scenes[0]);
+    }
+
+    public void ReturnToMenu()
+    {
+        LoadScene(mainMenu);
+    }
+    
     public void ReloadScene()
     {
         LoadScene(activeScene);
@@ -28,12 +38,11 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
     public void LoadScene(SceneInfo scene, bool asyncLoad = true)
     {
         LoadScene(scene.SceneIndex, asyncLoad);
-        activeScene = scene.SceneIndex;
     }
-    
+
     public void LoadScene(int index, bool asyncLoad = true)
     {
-        
+        activeScene = index;
         if (asyncLoad) {
             SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
         }
@@ -50,13 +59,13 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
 
     public void LoadNextLevel()
     {
-        activeLevel++;
-        if (activeLevel < scenes.Length) {
-            LoadScene(scenes[activeLevel]);
+        activeScene++;
+        if (activeScene >= scenes.Length) {
+            activeScene = 0;
+            LoadScene(scenes[activeScene]);
         }
         else {
-            activeLevel = 0;
-            LoadScene(scenes[activeLevel]);
+            LoadScene(scenes[activeScene]);
         }
     }
 }

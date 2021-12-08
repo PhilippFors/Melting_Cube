@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         if (hasCollided) {
             meltParticles.Stop();
         }
-        else if (rb.velocity.magnitude > 0.001f) {
+        else if (rb.velocity.magnitude > 0.5f) {
             meltParticles.Play();
         }
         else {
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         var dot = Vector3.Dot(other.contacts[0].normal, Vector3.up);
-        if (dot > 0.95) {
+        if (dot > 0.6f) {
             grounded = true;
         }
 
