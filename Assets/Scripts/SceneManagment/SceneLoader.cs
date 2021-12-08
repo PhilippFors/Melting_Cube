@@ -62,7 +62,7 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
         activeScene++;
         if (activeScene >= scenes.Length) {
             activeScene = 0;
-            LoadScene(scenes[activeScene]);
+            ReturnToMenu();
         }
         else {
             LoadScene(scenes[activeScene]);
