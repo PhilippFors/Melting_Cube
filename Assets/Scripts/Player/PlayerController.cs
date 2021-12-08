@@ -265,6 +265,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.GetComponent<MeltStopper>()) {
             hasCollided = true;
+            other.gameObject.GetComponentInChildren<ParticleSystem>().Play();
         }
 
         if (other.gameObject.CompareTag("Wall") && canWallSlide) {
