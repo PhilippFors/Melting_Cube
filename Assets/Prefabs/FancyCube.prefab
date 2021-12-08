@@ -95,7 +95,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.01, y: 1.01, z: 1.01}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: -0.5, y: 0.5, z: 0.5}
 --- !u!114 &8148168890978034764
 MonoBehaviour:
@@ -111,5 +111,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnOnTime: 0.2
   turnOffTime: 0.8
-  normalColor: {r: 1, g: 0.32314324, b: 0.0018211621, a: 1}
-  lightColor: {r: 77.87429, g: 12.639282, b: 0, a: 1}
+  normalColor: {r: 0.90466136, g: 0.43965724, b: 0, a: 1}
+  lightColor: {r: 5.992157, g: 2.9176471, b: 0, a: 1}

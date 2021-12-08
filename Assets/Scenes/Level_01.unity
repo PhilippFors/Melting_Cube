@@ -1139,7 +1139,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722562389}
-  m_Text: Small size = high jump
+  m_Text: small size = high jump
   m_OffsetZ: 0
   m_CharacterSize: 0.43
   m_LineSpacing: 1
