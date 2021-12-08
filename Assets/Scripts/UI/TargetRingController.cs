@@ -7,6 +7,7 @@ public class TargetRingController : MonoBehaviour
     [SerializeField] private Texture thickerRing;
     [SerializeField] private Texture thinnerRing;
     [SerializeField] private float fadeDuration;
+    [SerializeField] private float expandDuration = 0.2f;
     [SerializeField, ColorUsage(true, true)] private Color transparentColor;
     [SerializeField, ColorUsage(true, true)] private Color fullColor;
 
@@ -35,11 +36,11 @@ public class TargetRingController : MonoBehaviour
     public void ExpandCircle(bool expand, float maxDist = 0, float scale = 0)
     {
         if (expand) {
-            transform.DOScale(new Vector3(maxDist, maxDist, maxDist) * 2, 0.5f);
+            transform.DOScale(new Vector3(maxDist, maxDist, maxDist) * 2 * 1.05f, expandDuration);
             image.texture = thinnerRing;
         }
         else {
-            transform.DOScale(scale, 0.3f);
+            transform.DOScale(scale, expandDuration);
             image.texture = thickerRing;
         }
     }

@@ -24,7 +24,7 @@ namespace DefaultNamespace.Visual
 
         private void OnTriggerStay(Collider other)
         {
-            var player = other.GetComponent<PlayerController>();
+            var player = other.GetComponentInParent<PlayerController>();
             if (player && player.OnWall) {
                 mat.DOVector(lightColor, "_EmissionColor", turnOnTime);
             }

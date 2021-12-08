@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 2817308044302792853}
   m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.03}
-  m_LocalScale: {x: 0.02482, y: 0.02482, z: 0.02482}
+  m_LocalScale: {x: 0.028543, y: 0.028543, z: 0.028543}
   m_Children:
   - {fileID: 587246371308214804}
   m_Father: {fileID: 7559176352898065586}
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.625, y: 0.02}
+  m_AnchoredPosition: {x: 0.625, y: 0.654}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2568056777024587513
@@ -252,6 +252,10 @@ MonoBehaviour:
   okColor: {r: 0.48293424, g: 0.9245283, b: 0.37884414, a: 1}
   warningColor: {r: 0.9528302, g: 0.9000015, b: 0.3275186, a: 1}
   dangerColor: {r: 1, g: 0.2776947, b: 0.2776947, a: 1}
+  matokColor: {r: 0.23162019, g: 1.0779488, b: 0.034938145, a: 1}
+  matwarningColor: {r: 0.9749472, g: 0.90107065, b: 0.031599693, a: 1}
+  matdangerColor: {r: 1.5443052, g: 0.093760304, b: 0.093760304, a: 1}
+  meshRenderer: {fileID: 6972605654704900559}
 --- !u!1 &7044052090223549022
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +295,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7044052090223549022}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 114133146705714492, guid: 951365cabe8cc5f4d891e204eae9db56, type: 3}
 --- !u!23 &6972605654704900559
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -311,6 +315,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: 831a54a8b7ed0cd408c0ba1287083b7c, type: 2}
   - {fileID: 2100000, guid: c0c6dad1d7d808f44a975ff4cd044075, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

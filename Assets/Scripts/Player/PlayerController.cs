@@ -8,8 +8,6 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem meltParticles;
     public bool HasCollided => hasCollided;
     public bool OnWall => onWall;
-    public float MaxDistance => maxDistance;
-    public Vector3 visualScale => visual.transform.localScale;
 
     [SerializeField] private GameObject visual;
     [SerializeField] private float force = 8;
@@ -56,6 +54,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         targetRingController.ExpandCircle(false, maxDistance, meltingController.HitterScale);
+        StopWallSlide(true);
     }
 
     private void Update()
@@ -125,8 +124,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f,
                 groundMask) &&
             hit.transform.CompareTag("Wall")) {
-            transform.position += newCross * (Time.deltaTime *
-                                              (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) *
+            transform.position += newCross * (Time.deltaTime * (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) *
                                                   2));
         }
         else {
@@ -190,7 +188,9 @@ public class PlayerController : MonoBehaviour
 
     private void Release()
     {
-        StopWallSlide(true);
+        if (onWall) {
+            StopWallSlide(true);
+        }
 
         rb.AddForce(throwDirection * (distance * force), ForceMode.Impulse);
 

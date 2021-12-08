@@ -59,7 +59,7 @@ Camera:
   far clip plane: 1000
   field of view: 70
   orthographic: 1
-  orthographic size: 6.5
+  orthographic size: 7
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -169,7 +169,7 @@ Camera:
   far clip plane: 1000
   field of view: 70
   orthographic: 1
-  orthographic size: 6.5
+  orthographic size: 7
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -242,5 +242,6 @@ MonoBehaviour:
   followPlayer: 1
   xOffset: 10
   yOffset: 0
-  edgePadding: 150
+  edgePadding: 30
   speed: 6
+  overlayCam: {fileID: 7614178699324096842}

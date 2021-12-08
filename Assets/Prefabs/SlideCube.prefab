@@ -93,8 +93,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.94944, z: 0.99999994}
-  m_Center: {x: -0.5, y: 0.49936247, z: 0.49999997}
+  m_Size: {x: 1, y: 0.94944, z: 2.8366117}
+  m_Center: {x: -0.5, y: 0.49936247, z: 1.4183059}
 --- !u!1 &4815396356424907778
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,8 +188,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.99999994}
-  m_Center: {x: -0.5, y: 0.5, z: 0.49999997}
+  m_Size: {x: 1, y: 1, z: 1.9664211}
+  m_Center: {x: -0.5, y: 0.5, z: 0.98321056}
 --- !u!1 &7024060875419923039
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,8 +283,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.99999994}
-  m_Center: {x: -0.5, y: 0.5, z: 0.49999997}
+  m_Size: {x: 1, y: 1, z: 2.5302045}
+  m_Center: {x: -0.5, y: 0.5, z: 1.2651023}
 --- !u!1 &8590643364418534677
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,8 +378,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9492419, z: 0.9999999}
-  m_Center: {x: -0.5, y: 0.49886167, z: 0.49999994}
+  m_Size: {x: 1, y: 0.9492419, z: 2.5171502}
+  m_Center: {x: -0.5, y: 0.49886167, z: 1.2585751}
 --- !u!1 &8966794060486608731
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,9 +393,9 @@ GameObject:
   - component: {fileID: 7453615440976979598}
   - component: {fileID: 3002772727084060752}
   - component: {fileID: 176734032349260387}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SlideCube
-  m_TagString: Wall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -407,9 +407,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8966794060486608731}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 5, z: 1}
   m_Children:
   - {fileID: 1403894898292482778}
   - {fileID: 2894955869414030961}
@@ -495,5 +495,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnOnTime: 0.2
   turnOffTime: 0.8
-  normalColor: {r: 0, g: 1, b: 0.09084173, a: 0}
-  lightColor: {r: 0, g: 12.125731, b: 1.0936935, a: 1}
+  normalColor: {r: 0, g: 1, b: 0.09084173, a: 1}
+  lightColor: {r: 0, g: 11.984314, b: 1.1294118, a: 1}

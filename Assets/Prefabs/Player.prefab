@@ -5096,6 +5096,7 @@ GameObject:
   - component: {fileID: 7557027575686055772}
   - component: {fileID: 3441572643284451070}
   - component: {fileID: 6652534983390182689}
+  - component: {fileID: 968545151088409419}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Player
@@ -5181,6 +5182,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallSlideParticles: {fileID: 3905121873513186329}
+--- !u!65 &968545151088409419
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467835015010617043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2289752304218796816
 GameObject:
   m_ObjectHideFlags: 0
@@ -5193,7 +5207,6 @@ GameObject:
   - component: {fileID: 2289752304218796808}
   - component: {fileID: 2289752304218796815}
   - component: {fileID: 2289752304218796814}
-  - component: {fileID: 4949774723397497882}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5209,7 +5222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2289752304218796816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.846, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7059410394812669541}
@@ -5234,12 +5247,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDummy: 0
-  meltOverDistanceAmount: 0.2
+  meltOverDistanceAmount: 0.15
   startSize: 0
-  col: {fileID: 4949774723397497882}
   setSizeOnImpact: 0
   minMass: 0.9
-  maxMass: 2
+  maxMass: 1.6
   minSize: 0.01
   maxSize: 2
   visual: {fileID: 1467835015010617043}
@@ -5263,14 +5275,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meltParticles: {fileID: 6392780209219146572}
   visual: {fileID: 1467835015010617043}
-  force: 5
-  maxDistance: 3
+  force: 7.5
+  maxDistance: 2
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  wallSlideTime: 1.5
+  wallSlideTime: 2
   wallSlideDelay: 0.5
-  wallSlideSpeed: 4
+  wallSlideSpeed: 3.5
   wallSlidePushaway: 1
   wallSlideParticles: {fileID: 3905121873513186329}
   targetRingController: {fileID: 6919809466127122761}
@@ -5287,22 +5299,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 98
   m_CollisionDetection: 0
---- !u!65 &4949774723397497882
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2289752304218796816}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3451850904435990305
 GameObject:
   m_ObjectHideFlags: 0
@@ -5535,8 +5534,9 @@ MonoBehaviour:
   thickerRing: {fileID: 2800000, guid: 88a11a66381111b4a8c641879028190d, type: 3}
   thinnerRing: {fileID: 2800000, guid: 5ca24b0db5d678941a52dede983a9224, type: 3}
   fadeDuration: 0.2
-  transparentColor: {r: 0.004024717, g: 0.5028866, b: 1, a: 0.3137255}
-  fullColor: {r: 0.022183742, g: 2.839519, b: 5.656854, a: 1}
+  expandDuration: 0.2
+  transparentColor: {r: 0.004024717, g: 0.5028866, b: 1, a: 0.19607843}
+  fullColor: {r: 0.007843138, g: 0.7529412, b: 1.4980392, a: 0.78431374}
 --- !u!1 &5349526468214972188
 GameObject:
   m_ObjectHideFlags: 0
@@ -10739,3 +10739,7 @@ MonoBehaviour:
   okColor: {r: 0.277129, g: 0.9056604, b: 0.29655617, a: 1}
   warningColor: {r: 0.8679245, g: 0.79825276, b: 0.30652177, a: 1}
   dangerColor: {r: 0.8962264, g: 0.31651706, b: 0.33809605, a: 1}
+  matokColor: {r: 0, g: 0, b: 0, a: 0}
+  matwarningColor: {r: 0, g: 0, b: 0, a: 0}
+  matdangerColor: {r: 0, g: 0, b: 0, a: 0}
+  meshRenderer: {fileID: 0}

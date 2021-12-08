@@ -17,7 +17,6 @@ namespace Entities.Player.PlayerInput
         public bool isDummy;
         public float meltOverDistanceAmount = 0.2f;
         [HideInInspector] public float startSize;
-        [SerializeField] private BoxCollider col;
         [SerializeField] private bool setSizeOnImpact;
         [SerializeField] private float minMass = 0.5f;
         [SerializeField] private float maxMass = 1.5f;
@@ -80,7 +79,7 @@ namespace Entities.Player.PlayerInput
         {
             if (rb) {
                 rb.mass = Remap(minSize, maxSize, minMass, maxMass, CurrentSize);
-                Debug.Log($"Mass: {rb.mass}");
+                // Debug.Log($"Mass: {rb.mass}");
             }
         }
 
@@ -123,10 +122,9 @@ namespace Entities.Player.PlayerInput
                         hitter.transform.localScale = newScale * 3f;
                     }
                     else {
-                        hitter.transform.localScale = newScale * 1.5f;
+                        hitter.transform.localScale = newScale * 2f;
                     }
 
-                    col.size = newScale;
                     playerController.meltParticles.transform.localScale = newScale;
                 }
                 else {
@@ -148,7 +146,7 @@ namespace Entities.Player.PlayerInput
                 if (setSizeOnImpact) {
                     SetScale();
                 }
-                transform.position += -other.contacts[0].normal * sizeDiff;
+                
                 sizeDiff = 0;
             }
         }
