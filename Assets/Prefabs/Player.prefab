@@ -5252,13 +5252,14 @@ MonoBehaviour:
   visual: {fileID: 1467835015010617043}
   force: 7.5
   maxDistance: 2
+  trajectoryLerp: 13
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  wallSlideTime: 2
-  wallSlideDelay: 0.2
-  wallSlideSpeed: 3.5
-  wallSlidePushaway: 1
+  wallSlideTime: 3.5
+  wallSlideDelay: 0.1
+  wallSlideSpeed: 3.2
+  wallSlidePushaway: 2
   wallSlideParticles: {fileID: 3905121873513186329}
   targetRingController: {fileID: 6919809466127122761}
 --- !u!54 &2289752304218796814
@@ -5284,7 +5285,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2289752304218796816}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3a51e7e5c5000ee438fcf9d4fde6fb90, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

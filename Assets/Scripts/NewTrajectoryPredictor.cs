@@ -76,7 +76,9 @@ public class NewTrajectoryPredictor : SingletonBehaviour<NewTrajectoryPredictor>
         var pos = new List<Vector3>();
         float size = 0;
         for (int i = 0; i < tempPos.Count; i++) {
-            if (!Physics.CheckBox(tempPos[i], tempScales[i] / 2 - new Vector3(0.01f, 0.01f, 0.01f), Quaternion.identity, LayerMask.GetMask("Ground"))) {
+            var scale = tempScales[i] / 2 - new Vector3(0.05f, 0.05f, 0.05f);
+            var tempScale = scale.x < 0 ? Vector3.zero : scale;
+            if (!Physics.CheckBox(tempPos[i], tempScale, Quaternion.identity, LayerMask.GetMask("Ground"))) {
                 pos.Add(tempPos[i]);
                 size = tempSizes[i];
             }

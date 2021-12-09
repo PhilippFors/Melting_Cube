@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Entities.Player.PlayerInput;
 using UnityEngine;
@@ -12,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject visual;
     [SerializeField] private float force = 8;
     [SerializeField] private float maxDistance = 4;
+    [SerializeField] private float trajectoryLerp = 6f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField, Header("Wallslide")] private float wallSlideTime;
     [SerializeField] private float wallSlideDelay = 0.5f;
@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 cross;
     private Coroutine wallSlide;
     private bool grounded;
+
+    private float tempDistance;
+    private Vector3 tempDirection;
 
     private void Awake()
     {
@@ -121,14 +124,18 @@ public class PlayerController : MonoBehaviour
 
         var newCross = new Vector3(0, crossY, crossZ);
 
-        if (Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f, groundMask, QueryTriggerInteraction.Ignore) && hit.transform.CompareTag("Wall")) {
-            transform.position += newCross * (Time.deltaTime * (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) * 2));
+        if (Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f, groundMask,
+            QueryTriggerInteraction.Ignore) && hit.transform.CompareTag("Wall")) {
+            transform.position += newCross * (Time.deltaTime *
+                                              (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) *
+                                                  2));
         }
         else {
             StopWallSlide();
         }
 
-        if (Physics.Raycast(transform.position, newCross, visual.transform.localScale.x + 0.1f, groundMask, QueryTriggerInteraction.Ignore)) {
+        if (Physics.Raycast(transform.position, newCross, visual.transform.localScale.x + 0.1f, groundMask,
+            QueryTriggerInteraction.Ignore)) {
             StopWallSlide();
         }
     }
@@ -178,7 +185,9 @@ public class PlayerController : MonoBehaviour
             distance = Vector3.Distance(point, transform.position);
             distance = Mathf.Clamp(distance, 0, maxDistance);
 
-            NewTrajectoryPredictor.Instance.Simulate(gameObject, rb.velocity, throwDirection * (distance * force));
+            tempDirection = Vector3.Lerp(tempDirection, throwDirection, trajectoryLerp * Time.deltaTime);
+            tempDistance = Mathf.Lerp(tempDistance, distance, trajectoryLerp * Time.deltaTime);
+            NewTrajectoryPredictor.Instance.Simulate(gameObject, rb.velocity, tempDirection * (tempDistance * force));
             NewTrajectoryPredictor.Instance.EnableTrajectory();
         }
     }
