@@ -1481,6 +1481,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BG
       objectReference: {fileID: 0}
+    - target: {fileID: 6270691700132658332, guid: ad81c4793668b11438c6172dbf6aae39, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 022cc7247fa345f438530fabcbab3581, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad81c4793668b11438c6172dbf6aae39, type: 3}
 --- !u!1 &310891428
@@ -7117,8 +7121,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0, g: 1, b: 0.867985, a: 1}
-      maxColor: {r: 0.2, g: 0.55928445, b: 0.98039216, a: 1}
+      minColor: {r: 0.4960437, g: 0, b: 0.6132076, a: 1}
+      maxColor: {r: 0.9921569, g: 0.33333334, b: 0.77647066, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
