@@ -236,8 +236,8 @@ public class PlayerController : MonoBehaviour
 
     private void ResetRigidbody()
     {
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
     private IEnumerator WallSlide()
