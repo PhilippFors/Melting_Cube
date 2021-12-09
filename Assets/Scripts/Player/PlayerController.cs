@@ -13,13 +13,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxDistance = 4;
     [SerializeField] private float trajectoryLerp = 6f;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private TargetRingController targetRingController;
+    
     [SerializeField, Header("Wallslide")] private float wallSlideTime;
     [SerializeField] private float wallSlideDelay = 0.5f;
     [SerializeField] private float wallSlideSpeed = 5f;
     [SerializeField] private float wallSlidePushaway = 5f;
     [SerializeField] private ParticleSystem wallSlideParticles;
-    [SerializeField] private TargetRingController targetRingController;
-
+    
     private Rigidbody rb;
     private Camera cam;
     private MeltingController meltingController;
@@ -96,7 +97,6 @@ public class PlayerController : MonoBehaviour
             meltParticles.Stop();
         }
     }
-
 
     private void WallSlideMovement()
     {
@@ -281,8 +281,7 @@ public class PlayerController : MonoBehaviour
             contact = c;
             StartWallSlide();
 
-            var tempContactPoint = new Vector3(visual.transform.localPosition.x, visual.transform.localPosition.y,
-                transform.InverseTransformPoint(contact.point).z);
+            var tempContactPoint = new Vector3(visual.transform.localPosition.x, visual.transform.localPosition.y, transform.InverseTransformPoint(contact.point).z);
             wallSlideParticles.transform.localPosition = tempContactPoint;
         }
 
