@@ -269,7 +269,6 @@ public class PlayerController : MonoBehaviour
         }
 
         if (other.gameObject.CompareTag("Wall") && canWallSlide) {
-            var c = other.GetContact(0);
             contact = c;
             StartWallSlide();
 
