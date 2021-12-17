@@ -66,6 +66,9 @@ public class PlayerController : MonoBehaviour
         if (!Physics.Raycast(transform.position, Vector3.down, 2f, groundMask)) {
             grounded = false;
         }
+        else if(!grounded) {
+            grounded = true;
+        }
 
         if (grounded || onWall) {
             DistanceBased();
@@ -126,8 +129,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, wallDir, out var hit, visual.transform.localScale.x + 0.2f, groundMask,
             QueryTriggerInteraction.Ignore) && hit.transform.CompareTag("Wall")) {
-            transform.position += newCross * (Time.deltaTime *
-                                              (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) *
+            transform.position += newCross * (Time.deltaTime * (wallSlideSpeed + Mathf.Clamp(1 - meltingController.CurrentSize, 0, 1) *
                                                   2));
         }
         else {
@@ -267,7 +269,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         var c = other.contacts[0];
-        var dot = Vector3.Dot(c.normal, Vector3.up);
+        var dot = Vector3.Dot(c.normal, GameManager.Instance.reverseGravity ? Vector3.down : Vector3.up);
         if (dot > 0.6f) {
             grounded = true;
         }
